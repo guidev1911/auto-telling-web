@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login'; // Importa o CSS externo
+import '../styles/login.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
