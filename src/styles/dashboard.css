@@ -1,0 +1,59 @@
+/* General container for the dashboard */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0B3674; /* Fundo azul escuro */
+}
+
+/* Menu à esquerda */
+.dashboard-menu {
+  width: 250px;
+  background-color: #0B2A4C; /* Fundo azul mais escuro */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+/* Estilo das opções do menu */
+.dashboard-menu a {
+  text-decoration: none;
+  color: white;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.dashboard-menu a:hover {
+  background-color: #0B2A4C; /* Cor de destaque ao passar o mouse */
+  cursor: pointer;
+}
+
+/* Conteúdo principal do dashboard */
+.dashboard-content {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: white;
+  color: #333;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-left: 250px; /* Alinha o conteúdo à direita do menu */
+}
+
+.dashboard-content h1 {
+  font-size: 2.5rem;
+  color: #0B3674;
+}
+
+.dashboard-content p {
+  font-size: 1rem;
+  color: #555;
+}
