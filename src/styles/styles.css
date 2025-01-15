@@ -1,0 +1,144 @@
+/* ===== Estilos Globais ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== Estilos do Login ===== */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Altura completa */
+    background: linear-gradient(135deg, #0B3674, #00F778);
+}
+
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 1rem;
+    color: #0B3674;
+}
+
+.login-box label {
+    display: block;
+    text-align: left;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: #0B3674;
+    box-shadow: 0 0 5px rgba(11, 54, 116, 0.5);
+}
+
+.login-box button {
+    width: 100%;
+    background: #0B3674;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.login-box button:hover {
+    background: #00F778;
+}
+
+.login-box .error {
+    color: red;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* ===== Estilos do Dashboard ===== */
+.dashboard-container {
+    display: flex;
+    height: 100vh; /* Altura completa */
+    margin: 0;
+    padding: 0;
+    background-color: #0B3674; /* Fundo azul escuro */
+}
+
+/* Menu à esquerda */
+.dashboard-menu {
+    width: 250px;
+    background-color: #0B2A4C; /* Fundo azul mais escuro */
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    position: fixed; /* Menu fixo */
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dashboard-menu a {
+    text-decoration: none;
+    color: white;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    text-align: center;
+    padding: 0.5rem 0;
+    width: 100%;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-menu a:hover {
+    background-color: #0B3674; /* Cor de destaque ao passar o mouse */
+    cursor: pointer;
+}
+
+/* Conteúdo principal do dashboard */
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: white;
+    color: #333;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-left: 250px; /* Alinha o conteúdo à direita do menu */
+}
+
+.dashboard-content h1 {
+    font-size: 2.5rem;
+    color: #0B3674;
+}
+
+.dashboard-content p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Adicionar estilo para ocultar o menu na página de login */
+.hidden-menu {
+    display: none;
+}
