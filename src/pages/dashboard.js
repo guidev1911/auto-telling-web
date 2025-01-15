@@ -8,6 +8,7 @@ const Dashboard = () => {
             <div className="dashboard-menu">
                 <Link to="/dashboard">Dashboard</Link>
                 <Link to="/financiamento">Financiamento</Link>
+                <Link to="/ipva">Ipva</Link>
             </div>
             <div className="dashboard-content">
                 <h1>Bem-vindo ao Dashboard</h1>
