@@ -12,7 +12,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute />} >
           <Route path="" element={<Dashboard />} />
-          <Route path="financiamento" element={<Financiamento />} />
         </Route>
         <Route path="/financiamento" element={<Financiamento />} /> {/* Acesso direto */}
         <Route path="*" element={<Login />} />

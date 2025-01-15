@@ -1,10 +1,18 @@
 import React from 'react';
+import '../styles/styles.css'; 
+import { Link } from 'react-router-dom';
 
 const Financiamento = () => {
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>Financiamento</h1>
-      <p>Você está na página onde simula o financiamento.</p>
+    <div className="dashboard-container">
+        <div className="dashboard-menu">
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/financiamento">Financiamento</Link>
+        </div>
+        <div className="dashboard-content">
+            <h1>Bem-vindo ao financiamento</h1>
+            <p>Selecione uma opção no menu à esquerda para navegar pelas páginas.</p>
+        </div>
     </div>
   );
 };
