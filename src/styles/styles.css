@@ -76,25 +76,23 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===== Estilos do Dashboard ===== */
 .dashboard-container {
     display: flex;
-    height: 100vh; /* Altura completa */
+    height: 100vh; 
     margin: 0;
     padding: 0;
-    background-color: #0B3674; /* Fundo azul escuro */
+    background-color: #0B3674; 
 }
 
-/* Menu à esquerda */
 .dashboard-menu {
     width: 250px;
-    background-color: #0B2A4C; /* Fundo azul mais escuro */
+    background-color: #0B2A4C; 
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
-    position: fixed; /* Menu fixo */
+    position: fixed; 
     height: 100%;
     overflow-y: auto;
 }
@@ -117,14 +115,13 @@ body {
 }
 
 .dashboard-menu a:hover {
-    background-color: white; /* Cor de destaque ao passar o mouse */
+    background-color: white; 
     cursor: pointer;
     color: #0B2A4C;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
-/* Conteúdo principal do dashboard */
 .dashboard-content {
     flex-grow: 1;
     padding: 2rem;
@@ -133,7 +130,7 @@ body {
     overflow-y: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    margin-left: 250px; /* Alinha o conteúdo à direita do menu */
+    margin-left: 250px;
 }
 
 .dashboard-content h1 {
@@ -146,7 +143,6 @@ body {
     color: #555;
 }
 
-/* Adicionar estilo para ocultar o menu na página de login */
 .hidden-menu {
     display: none;
 }
