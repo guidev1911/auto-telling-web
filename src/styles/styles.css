@@ -94,7 +94,6 @@ body {
     color: white;
     position: fixed; 
     height: 100%;
-    overflow-y: auto;
 }
 
 .dashboard-menu a {
