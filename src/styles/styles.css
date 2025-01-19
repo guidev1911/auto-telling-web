@@ -104,8 +104,8 @@ body {
     font-size: 1rem;
     text-align: center;
     padding: 0.5rem 0;
-    width: 110%;
-    transition: background-color 0.3s;
+    width: 107%;
+    transition: all 0.5s ease-in-out;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,11 +114,48 @@ body {
 }
 
 .dashboard-menu a:hover {
+    padding: 12px;
     background-color: white; 
     cursor: pointer;
     color: #0B2A4C;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+}
+
+#btSair {
+    width: 250px;
+    background-color: #0B2A4C; 
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+#btSair a {
+    text-decoration: none;
+    color: white;
+    margin: 0.5rem 0;
+    background-color:rgb(154, 21, 21);
+    font-size: 1rem;
+    text-align: center;
+    padding: 0.5rem 0;
+    width: 85%;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+}
+
+#btSair a:hover {
+    background-color:red;
+    cursor: pointer !important;
+    color: white;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
 }
 
 .dashboard-content {
