@@ -130,7 +130,9 @@ const Financiamento = () => {
             Calcular Financiamento
           </button>
           {resultado && (
-            <div className="mt-4 p-4 bg-green-100 text-green-800 rounded shadow">
+            <div className="printable-result mt-4 p-4 bg-green-100 text-green-800 rounded shadow">
+              <h2 class="text-2xl font-bold text-gray-800 mt-6 font-sans">Auto-telling Financiamento</h2>
+              <p>__________________________________________________________________________________________________</p>
               <p>Nome do cliente: <strong>{resultado.cliente}</strong></p>
               <p>Carro: <strong>{resultado.carro}</strong></p>
               <p>Valor final do carro: <strong>{resultado.valorFinal}</strong></p>
