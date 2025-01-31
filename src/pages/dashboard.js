@@ -5,9 +5,26 @@ import axios from "axios";
 
 const Dashboard = () => {
   const [carros, setCarros] = useState([]); // Lista de carros
-  const [pesquisa, setPesquisa] = useState(""); // Busca por modelo
+  const [pesquisa, setPesquisa] = useState(""); // Busca por marca e modelo
   const [carroSelecionado, setCarroSelecionado] = useState(null); // Detalhes do carro
   const [erro, setErro] = useState(""); // Mensagem de erro (se houver)
+  const [filtrosAvancadosVisiveis, setFiltrosAvancadosVisiveis] = useState(false); // Controle de visibilidade dos filtros avançados
+  const [filtros, setFiltros] = useState({
+    potencia: "",
+    motor: "",
+    velocidade_final: "",
+    zero_a_cem: "",
+    status: "",
+    preco_min: "",
+    preco_max: "",
+    quilometragem_min: "",
+    quilometragem_max: "",
+    numero_portas: "",
+    tipo_tracao: "",
+    ano_min: "",
+    ano_max: "",
+    categoria: ""
+  });
 
   // Busca os carros da API com autenticação
   useEffect(() => {
@@ -39,10 +56,38 @@ const Dashboard = () => {
     buscarCarros();
   }, []);
 
-  // Filtra os carros com base no campo de pesquisa
-  const carrosFiltrados = carros.filter((carro) =>
-    carro.modelo.toLowerCase().includes(pesquisa.toLowerCase())
-  );
+  // Filtra os carros com base nos campos de pesquisa e filtros avançados
+  const carrosFiltrados = carros.filter((carro) => {
+    const filtroPesquisa = carro.modelo.toLowerCase().includes(pesquisa.toLowerCase()) ||
+      carro.marca.toLowerCase().includes(pesquisa.toLowerCase());
+
+    const filtroFiltrosAvancados =
+      (filtros.potencia ? carro.potencia.toString().includes(filtros.potencia) : true) &&
+      (filtros.motor ? carro.motor.toLowerCase().includes(filtros.motor.toLowerCase()) : true) &&
+      (filtros.velocidade_final ? carro.velocidade_final.toString().includes(filtros.velocidade_final) : true) &&
+      (filtros.zero_a_cem ? carro.zero_a_cem.toString().includes(filtros.zero_a_cem) : true) &&
+      (filtros.status ? carro.status.toLowerCase().includes(filtros.status.toLowerCase()) : true) &&
+      (filtros.preco_min ? parseFloat(carro.preco) >= filtros.preco_min : true) &&
+      (filtros.preco_max ? parseFloat(carro.preco) <= filtros.preco_max : true) &&
+      (filtros.quilometragem_min ? carro.quilometragem >= filtros.quilometragem_min : true) &&
+      (filtros.quilometragem_max ? carro.quilometragem <= filtros.quilometragem_max : true) &&
+      (filtros.numero_portas ? carro.numero_portas === parseInt(filtros.numero_portas) : true) &&
+      (filtros.tipo_tracao ? carro.tipo_tracao.toLowerCase().includes(filtros.tipo_tracao.toLowerCase()) : true) &&
+      (filtros.ano_min ? carro.ano >= filtros.ano_min : true) &&
+      (filtros.ano_max ? carro.ano <= filtros.ano_max : true) &&
+      (filtros.categoria ? carro.categoria.toLowerCase().includes(filtros.categoria.toLowerCase()) : true);
+
+    return filtroPesquisa && filtroFiltrosAvancados;
+  });
+
+  // Manipula a mudança de filtro
+  const handleFiltroChange = (e) => {
+    const { name, value } = e.target;
+    setFiltros((prevFiltros) => ({
+      ...prevFiltros,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="dashboard-container">
@@ -55,7 +100,7 @@ const Dashboard = () => {
         <div className="mb-4 flex items-center">
           <input
             type="text"
-            placeholder="Pesquisar por modelo..."
+            placeholder="Pesquisar por marca ou modelo..."
             className="border border-gray-300 rounded-l-lg p-2 w-full focus:outline-none focus:ring focus:ring-blue-400"
             value={pesquisa}
             onChange={(e) => setPesquisa(e.target.value)}
@@ -65,16 +110,143 @@ const Dashboard = () => {
           </button>
         </div>
 
+        {/* Botão de Filtros Avançados */}
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-600"
+          onClick={() => setFiltrosAvancadosVisiveis(!filtrosAvancadosVisiveis)}
+        >
+          Filtros Avançados
+        </button>
+
+        {/* Filtros Avançados */}
+        {filtrosAvancadosVisiveis && (
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Potência"
+              name="potencia"
+              value={filtros.potencia}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="text"
+              placeholder="Motor"
+              name="motor"
+              value={filtros.motor}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Velocidade Final"
+              name="velocidade_final"
+              value={filtros.velocidade_final}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="0-100 Km/h"
+              name="zero_a_cem"
+              value={filtros.zero_a_cem}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="text"
+              placeholder="Status"
+              name="status"
+              value={filtros.status}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Preço Mínimo"
+              name="preco_min"
+              value={filtros.preco_min}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Preço Máximo"
+              name="preco_max"
+              value={filtros.preco_max}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Quilometragem Mínima"
+              name="quilometragem_min"
+              value={filtros.quilometragem_min}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Quilometragem Máxima"
+              name="quilometragem_max"
+              value={filtros.quilometragem_max}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Número de Portas"
+              name="numero_portas"
+              value={filtros.numero_portas}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="text"
+              placeholder="Tipo de Tração"
+              name="tipo_tracao"
+              value={filtros.tipo_tracao}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Ano Mínimo"
+              name="ano_min"
+              value={filtros.ano_min}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Ano Máximo"
+              name="ano_max"
+              value={filtros.ano_max}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="text"
+              placeholder="Categoria"
+              name="categoria"
+              value={filtros.categoria}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+          </div>
+        )}
+
         {/* Tabela de carros */}
-        <table className="w-full bg-white shadow-md rounded-lg">
+        <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-500 text-white">
             <tr>
-              <th className="py-2 px-4">Marca</th>
-              <th className="py-2 px-4">Modelo</th>
-              <th className="py-2 px-4">Ano</th>
-              <th className="py-2 px-4">Cor</th>
-              <th className="py-2 px-4">Preço</th>
-              <th className="py-2 px-4">Status</th>
+              <th className="py-2 px-4 border">Marca</th>
+              <th className="py-2 px-4 border">Modelo</th>
+              <th className="py-2 px-4 border">Ano</th>
+              <th className="py-2 px-4 border">Cor</th>
+              <th className="py-2 px-4 border">Preço</th>
+              <th className="py-2 px-4 border">Status</th>
+              <th className="py-2 px-4 border">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -84,14 +256,31 @@ const Dashboard = () => {
                 className="hover:bg-gray-200 cursor-pointer"
                 onClick={() => setCarroSelecionado(carro)} // Define o carro selecionado
               >
-                <td className="py-2 px-4">{carro.marca}</td>
-                <td className="py-2 px-4">{carro.modelo}</td>
-                <td className="py-2 px-4">{carro.ano}</td>
-                <td className="py-2 px-4">{carro.cor}</td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4 border">{carro.marca}</td>
+                <td className="py-2 px-4 border">{carro.modelo}</td>
+                <td className="py-2 px-4 border">{carro.ano}</td>
+                <td className="py-2 px-4 border">{carro.cor}</td>
+                <td className="py-2 px-4 border">
                   R$ {parseFloat(carro.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                 </td>
-                <td className="py-2 px-4">{carro.status}</td>
+                <td className="py-2 px-4 border">
+                {/* Status */}
+                <span
+                  className={`inline-block px-4 py-2 rounded-full text-white ${
+                    carro.status.toLowerCase() === "disponível" ? "bg-green-500" : "bg-red-500"
+                  }`}
+                >
+                  {carro.status}
+                </span>
+              </td>
+              <td className="py-2 px-4 border">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  onClick={() => setCarroSelecionado(carro)}
+                >
+                  Detalhes
+                </button>
+              </td>
               </tr>
             ))}
           </tbody>
@@ -100,60 +289,60 @@ const Dashboard = () => {
         {/* Modal com detalhes do carro */}
         {carroSelecionado && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-1/2 shadow-lg">
-              <h2 className="text-xl font-bold mb-4">{carroSelecionado.modelo}</h2>
-              <p>
-                <strong>Marca:</strong> {carroSelecionado.marca}
-              </p>
-              <p>
-                <strong>Modelo:</strong> {carroSelecionado.modelo}
-              </p>
-              <p>
-                <strong>Categoria:</strong> {carroSelecionado.categoria}
-              </p>
-              <p>
-                <strong>Ano:</strong> {carroSelecionado.ano}
-              </p>
-              <p>
-                <strong>Cor:</strong> {carroSelecionado.cor}
-              </p>
-              <p>
-                <strong>Quilometragem:</strong> {carroSelecionado.quilometragem}
-              </p>
-              <p>
-                <strong>Potência:</strong> {carroSelecionado.potencia}
-              </p>
-              <p>
-                <strong>Motor:</strong> {carroSelecionado.motor}
-              </p>
-              <p>
-                <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
-              </p>
-              <p>
-                <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
-              </p>
-              <p>
-                <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
-              </p>
-              <p>
-                <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
-              </p>
-              <p>
-                <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
-              </p>
-              <p>
-                <strong>Características:</strong> {carroSelecionado.caracteristicas}
-              </p>
-              <p>
-                <strong>Preço:</strong> R${" "}
-                {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-              </p>
-              <p>
-                <strong>Status:</strong> {carroSelecionado.status}
-              </p>
+          <div className="bg-white p-6 rounded-lg w-1/2 shadow-lg">
+            <h2 className="text-xl font-bold mb-4">{carroSelecionado.modelo}</h2>
+            <p>
+              <strong>Marca:</strong> {carroSelecionado.marca}
+            </p>
+            <p>
+              <strong>Modelo:</strong> {carroSelecionado.modelo}
+            </p>
+            <p>
+              <strong>Categoria:</strong> {carroSelecionado.categoria}
+            </p>
+            <p>
+              <strong>Ano:</strong> {carroSelecionado.ano}
+            </p>
+            <p>
+              <strong>Cor:</strong> {carroSelecionado.cor}
+            </p>
+            <p>
+              <strong>Quilometragem:</strong> {carroSelecionado.quilometragem} km
+            </p>
+            <p>
+              <strong>Potência:</strong> {carroSelecionado.potencia} cv
+            </p>
+            <p>
+              <strong>Motor:</strong> {carroSelecionado.motor}
+            </p>
+            <p>
+              <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
+            </p>
+            <p>
+              <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
+            </p>
+            <p>
+              <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
+            </p>
+            <p>
+              <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
+            </p>
+            <p>
+              <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
+            </p>
+            <p>
+              <strong>Características:</strong> {carroSelecionado.caracteristicas}
+            </p>
+            <p>
+              <strong>Preço:</strong> R${" "}
+              {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </p>
+            <p>
+              <strong>Status:</strong> {carroSelecionado.status}
+            </p>
               <button
-                className="bg-red-500 text-white p-2 rounded-lg mt-4 hover:bg-red-600"
-                onClick={() => setCarroSelecionado(null)} // Fecha o modal
+                onClick={() => setCarroSelecionado(null)}
+                className="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
               >
                 Fechar
               </button>
