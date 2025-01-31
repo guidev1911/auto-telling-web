@@ -106,23 +106,50 @@ const Dashboard = () => {
                 <strong>Marca:</strong> {carroSelecionado.marca}
               </p>
               <p>
+                <strong>Modelo:</strong> {carroSelecionado.modelo}
+              </p>
+              <p>
                 <strong>Categoria:</strong> {carroSelecionado.categoria}
+              </p>
+              <p>
+                <strong>Ano:</strong> {carroSelecionado.ano}
               </p>
               <p>
                 <strong>Cor:</strong> {carroSelecionado.cor}
               </p>
               <p>
+                <strong>Quilometragem:</strong> {carroSelecionado.quilometragem}
+              </p>
+              <p>
+                <strong>Potência:</strong> {carroSelecionado.potencia}
+              </p>
+              <p>
                 <strong>Motor:</strong> {carroSelecionado.motor}
               </p>
               <p>
+                <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
+              </p>
+              <p>
+                <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
+              </p>
+              <p>
                 <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
+              </p>
+              <p>
+                <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
+              </p>
+              <p>
+                <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
+              </p>
+              <p>
+                <strong>Características:</strong> {carroSelecionado.caracteristicas}
               </p>
               <p>
                 <strong>Preço:</strong> R${" "}
                 {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </p>
               <p>
-                <strong>Características:</strong> {carroSelecionado.caracteristicas}
+                <strong>Status:</strong> {carroSelecionado.status}
               </p>
               <button
                 className="bg-red-500 text-white p-2 rounded-lg mt-4 hover:bg-red-600"
