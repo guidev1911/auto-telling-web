@@ -4,11 +4,11 @@ import Menu from "../components/menu";
 import axios from "axios";
 
 const Dashboard = () => {
-  const [carros, setCarros] = useState([]); // Lista de carros
-  const [pesquisa, setPesquisa] = useState(""); // Busca por marca e modelo
-  const [carroSelecionado, setCarroSelecionado] = useState(null); // Detalhes do carro
-  const [erro, setErro] = useState(""); // Mensagem de erro (se houver)
-  const [filtrosAvancadosVisiveis, setFiltrosAvancadosVisiveis] = useState(false); // Controle de visibilidade dos filtros avançados
+  const [carros, setCarros] = useState([]); 
+  const [pesquisa, setPesquisa] = useState(""); 
+  const [carroSelecionado, setCarroSelecionado] = useState(null); 
+  const [erro, setErro] = useState(""); 
+  const [filtrosAvancadosVisiveis, setFiltrosAvancadosVisiveis] = useState(false); 
   const [filtros, setFiltros] = useState({
     potencia: "",
     motor: "",
@@ -26,11 +26,9 @@ const Dashboard = () => {
     categoria: ""
   });
 
-  // Busca os carros da API com autenticação
   useEffect(() => {
     const buscarCarros = async () => {
       try {
-        // Recupera o token do localStorage
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -38,15 +36,14 @@ const Dashboard = () => {
           return;
         }
 
-        // Faz a requisição com o token no cabeçalho
         const resposta = await axios.get("http://localhost:3001/carros", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        setCarros(resposta.data); // Define a lista de carros
-        setErro(""); // Limpa o erro
+        setCarros(resposta.data); 
+        setErro("");
       } catch (erro) {
         console.error("Erro ao buscar os carros:", erro);
         setErro("Não foi possível carregar os carros. Verifique sua conexão ou tente novamente mais tarde.");
@@ -56,7 +53,6 @@ const Dashboard = () => {
     buscarCarros();
   }, []);
 
-  // Filtra os carros com base nos campos de pesquisa e filtros avançados
   const carrosFiltrados = carros.filter((carro) => {
     const filtroPesquisa = carro.modelo.toLowerCase().includes(pesquisa.toLowerCase()) ||
       carro.marca.toLowerCase().includes(pesquisa.toLowerCase());
@@ -97,17 +93,19 @@ const Dashboard = () => {
         {erro && <div className="text-red-500 font-bold mb-4">{erro}</div>}
 
         {/* Campo de busca */}
-        <div className="mb-4 flex items-center">
-          <input
-            type="text"
-            placeholder="Pesquisar por marca ou modelo..."
-            className="border border-gray-300 rounded-l-lg p-2 w-full focus:outline-none focus:ring focus:ring-blue-400"
-            value={pesquisa}
-            onChange={(e) => setPesquisa(e.target.value)}
-          />
-          <button className="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-600">
-            🔍
-          </button>
+        <div className="mb-4 flex items-center justify-start">
+          <div className="flex w-full max-w-md rounded-2xl shadow-md overflow-hidden border border-gray-300">
+            <input
+              type="text"
+              placeholder="Pesquisar por marca ou modelo..."
+              className="p-3 w-full focus:outline-none text-gray-700 placeholder-gray-400"
+              value={pesquisa}
+              onChange={(e) => setPesquisa(e.target.value)}
+            />
+            <button className="bg-blue-500 text-white p-3 hover:bg-blue-600 transition duration-300">
+              🔍︎
+            </button>
+          </div>
         </div>
 
         {/* Botão de Filtros Avançados */}
@@ -153,14 +151,16 @@ const Dashboard = () => {
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
             />
-            <input
-              type="text"
-              placeholder="Status"
-              name="status"
-              value={filtros.status}
-              onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
-            />
+          <select
+            name="status"
+            value={filtros.status}
+            onChange={handleFiltroChange}
+            className="border border-gray-300 rounded-lg p-2"
+          >
+            <option value="">Selecione o status</option>
+            <option value="Disponível">Disponível</option>
+            <option value="Indisponível">Indisponível</option>
+          </select>
             <input
               type="number"
               placeholder="Preço Mínimo"
@@ -201,14 +201,17 @@ const Dashboard = () => {
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
             />
-            <input
-              type="text"
-              placeholder="Tipo de Tração"
+            <select
               name="tipo_tracao"
               value={filtros.tipo_tracao}
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
-            />
+            >
+              <option value="">Selecione o tipo de tração</option>
+              <option value="Traseira">Traseira</option>
+              <option value="Dianteira">Dianteira</option>
+              <option value="Integral">Integral</option>
+            </select>
             <input
               type="number"
               placeholder="Ano Mínimo"

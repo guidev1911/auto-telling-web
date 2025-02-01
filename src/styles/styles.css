@@ -136,7 +136,7 @@ body {
     text-decoration: none;
     color: white;
     margin: 0.5rem 0;
-    background-color:rgb(229, 43, 43);
+    background-color:rgb(211, 50, 50);
     font-size: 1rem;
     text-align: center;
     padding: 0.5rem 0;
@@ -151,7 +151,7 @@ body {
 }
 
 #btSair a:hover {
-    background-color:red;
+    background-color:rgb(208, 0, 0);
     cursor: pointer !important;
     color: white;
     border-top-left-radius: 10px !important;
