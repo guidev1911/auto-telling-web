@@ -10,7 +10,8 @@ const Dashboard = () => {
   const [erro, setErro] = useState(""); 
   const [filtrosAvancadosVisiveis, setFiltrosAvancadosVisiveis] = useState(false); 
   const [filtros, setFiltros] = useState({
-    potencia: "",
+    potencia_min: "",
+    potencia_max: "",
     motor: "",
     velocidade_final: "",
     zero_a_cem: "",
@@ -58,7 +59,8 @@ const Dashboard = () => {
       carro.marca.toLowerCase().includes(pesquisa.toLowerCase());
 
     const filtroFiltrosAvancados =
-      (filtros.potencia ? carro.potencia.toString().includes(filtros.potencia) : true) &&
+      (filtros.potencia_min ? parseFloat(carro.potencia) >= filtros.potencia_min : true) &&
+      (filtros.potencia_max ? parseFloat(carro.potencia) <= filtros.potencia_max : true) &&
       (filtros.motor ? carro.motor.toLowerCase().includes(filtros.motor.toLowerCase()) : true) &&
       (filtros.velocidade_final ? carro.velocidade_final.toString().includes(filtros.velocidade_final) : true) &&
       (filtros.zero_a_cem ? carro.zero_a_cem.toString().includes(filtros.zero_a_cem) : true) &&
@@ -102,7 +104,7 @@ const Dashboard = () => {
               value={pesquisa}
               onChange={(e) => setPesquisa(e.target.value)}
             />
-            <button className="bg-blue-500 text-white p-3 hover:bg-blue-600 transition duration-300">
+            <button className="bg-blue-900 text-white p-3 hover:bg-blue-800 transition duration-500">
               🔍︎
             </button>
           </div>
@@ -110,7 +112,7 @@ const Dashboard = () => {
 
         {/* Botão de Filtros Avançados */}
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-600"
+          className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
           onClick={() => setFiltrosAvancadosVisiveis(!filtrosAvancadosVisiveis)}
         >
           Filtros Avançados
@@ -121,9 +123,17 @@ const Dashboard = () => {
           <div className="grid grid-cols-4 gap-4 mb-4">
             <input
               type="text"
-              placeholder="Potência"
-              name="potencia"
-              value={filtros.potencia}
+              placeholder="Potência máxima"
+              name="potencia_max"
+              value={filtros.potencia_max}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="text"
+              placeholder="Potência mínima"
+              name="potencia_min"
+              value={filtros.potencia_min}
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
             />
@@ -193,14 +203,6 @@ const Dashboard = () => {
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
             />
-            <input
-              type="number"
-              placeholder="Número de Portas"
-              name="numero_portas"
-              value={filtros.numero_portas}
-              onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
-            />
             <select
               name="tipo_tracao"
               value={filtros.tipo_tracao}
@@ -217,6 +219,14 @@ const Dashboard = () => {
               placeholder="Ano Mínimo"
               name="ano_min"
               value={filtros.ano_min}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2"
+            />
+            <input
+              type="number"
+              placeholder="Número de Portas"
+              name="numero_portas"
+              value={filtros.numero_portas}
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2"
             />
@@ -241,7 +251,7 @@ const Dashboard = () => {
 
         {/* Tabela de carros */}
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
-          <thead className="bg-blue-500 text-white">
+          <thead className="bg-blue-900 text-white">
             <tr>
               <th className="py-2 px-4 border">Marca</th>
               <th className="py-2 px-4 border">Modelo</th>
@@ -278,7 +288,7 @@ const Dashboard = () => {
               </td>
               <td className="py-2 px-4 border">
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800"
                   onClick={() => setCarroSelecionado(carro)}
                 >
                   Detalhes
