@@ -62,9 +62,9 @@ const Dashboard = () => {
       (filtros.potencia_min ? parseFloat(carro.potencia) >= filtros.potencia_min : true) &&
       (filtros.potencia_max ? parseFloat(carro.potencia) <= filtros.potencia_max : true) &&
       (filtros.motor ? carro.motor.toLowerCase().includes(filtros.motor.toLowerCase()) : true) &&
-      (filtros.velocidade_final ? carro.velocidade_final.toString().includes(filtros.velocidade_final) : true) &&
+      (filtros.velocidade_final ? parseFloat(carro.velocidade_final) >= filtros.velocidade_final : true) &&
       (filtros.zero_a_cem ? carro.zero_a_cem.toString().includes(filtros.zero_a_cem) : true) &&
-      (filtros.status ? carro.status.toLowerCase().includes(filtros.status.toLowerCase()) : true) &&
+      (filtros.status ? carro.status.includes(filtros.status) : true) &&
       (filtros.preco_min ? parseFloat(carro.preco) >= filtros.preco_min : true) &&
       (filtros.preco_max ? parseFloat(carro.preco) <= filtros.preco_max : true) &&
       (filtros.quilometragem_min ? carro.quilometragem >= filtros.quilometragem_min : true) &&
