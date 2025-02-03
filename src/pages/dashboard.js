@@ -78,7 +78,6 @@ const Dashboard = () => {
     return filtroPesquisa && filtroFiltrosAvancados;
   });
 
-  // Manipula a mudança de filtro
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
     setFiltros((prevFiltros) => ({
@@ -91,10 +90,11 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <Menu />
       <div className="dashboard-content p-6 bg-gray-100 min-h-screen">
-        {/* Mensagem de erro */}
         {erro && <div className="text-red-500 font-bold mb-4">{erro}</div>}
+        <div>
+        <img  alt="logo da auto-telling"/>
+        </div>
 
-        {/* Campo de busca */}
         <div className="mb-4 flex items-center justify-start">
           <div className="flex w-full max-w-md rounded-2xl shadow-md overflow-hidden border border-gray-300">
             <input
@@ -110,7 +110,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Botão de Filtros Avançados */}
         <button
           className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
           onClick={() => setFiltrosAvancadosVisiveis(!filtrosAvancadosVisiveis)}
@@ -118,7 +117,6 @@ const Dashboard = () => {
           Filtros Avançados
         </button>
 
-        {/* Filtros Avançados */}
         {filtrosAvancadosVisiveis && (
           <div className="grid grid-cols-4 gap-4 mb-4">
             <input
@@ -249,7 +247,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Tabela de carros */}
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
             <tr>
@@ -267,7 +264,7 @@ const Dashboard = () => {
               <tr
                 key={carro.id}
                 className="hover:bg-gray-200 cursor-pointer"
-                onClick={() => setCarroSelecionado(carro)} // Define o carro selecionado
+                onClick={() => setCarroSelecionado(carro)} 
               >
                 <td className="py-2 px-4 border">{carro.marca}</td>
                 <td className="py-2 px-4 border">{carro.modelo}</td>
@@ -277,7 +274,6 @@ const Dashboard = () => {
                   R$ {parseFloat(carro.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                 </td>
                 <td className="py-2 px-4 border">
-                {/* Status */}
                 <span
                   className={`inline-block px-4 py-2 rounded-full text-white ${
                     carro.status.toLowerCase() === "disponível" ? "bg-green-500" : "bg-red-500"
@@ -299,7 +295,6 @@ const Dashboard = () => {
           </tbody>
         </table>
 
-        {/* Modal com detalhes do carro */}
         {carroSelecionado && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg w-1/2 shadow-lg">
