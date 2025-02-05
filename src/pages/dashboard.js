@@ -126,7 +126,7 @@ const Dashboard = () => {
               name="potencia_max"
               value={filtros.potencia_max}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
@@ -134,7 +134,7 @@ const Dashboard = () => {
               name="potencia_min"
               value={filtros.potencia_min}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
@@ -142,7 +142,7 @@ const Dashboard = () => {
               name="motor"
               value={filtros.motor}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -150,7 +150,7 @@ const Dashboard = () => {
               name="velocidade_final"
               value={filtros.velocidade_final}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -158,13 +158,13 @@ const Dashboard = () => {
               name="zero_a_cem"
               value={filtros.zero_a_cem}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           <select
             name="status"
             value={filtros.status}
             onChange={handleFiltroChange}
-            className="border border-gray-300 rounded-lg p-2"
+            className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Selecione o status</option>
             <option value="Disponível">Disponível</option>
@@ -176,7 +176,7 @@ const Dashboard = () => {
               name="preco_min"
               value={filtros.preco_min}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -184,7 +184,7 @@ const Dashboard = () => {
               name="preco_max"
               value={filtros.preco_max}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -192,7 +192,7 @@ const Dashboard = () => {
               name="quilometragem_min"
               value={filtros.quilometragem_min}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -200,13 +200,13 @@ const Dashboard = () => {
               name="quilometragem_max"
               value={filtros.quilometragem_max}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <select
               name="tipo_tracao"
               value={filtros.tipo_tracao}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Selecione o tipo de tração</option>
               <option value="Traseira">Traseira</option>
@@ -219,7 +219,7 @@ const Dashboard = () => {
               name="ano_min"
               value={filtros.ano_min}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -227,7 +227,7 @@ const Dashboard = () => {
               name="numero_portas"
               value={filtros.numero_portas}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="number"
@@ -235,7 +235,7 @@ const Dashboard = () => {
               name="ano_max"
               value={filtros.ano_max}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
@@ -243,7 +243,7 @@ const Dashboard = () => {
               name="categoria"
               value={filtros.categoria}
               onChange={handleFiltroChange}
-              className="border border-gray-300 rounded-lg p-2"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         )}
