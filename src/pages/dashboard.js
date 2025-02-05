@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/styles.css";
 import Menu from "../components/menu";
 import axios from "axios";
+import logoAt from "../images/logo-at.png";
 
 const Dashboard = () => {
   const [carros, setCarros] = useState([]); 
@@ -91,9 +92,6 @@ const Dashboard = () => {
       <Menu />
       <div className="dashboard-content p-6 bg-gray-100 min-h-screen">
         {erro && <div className="text-red-500 font-bold mb-4">{erro}</div>}
-        <div>
-        <img  alt="logo da auto-telling"/>
-        </div>
 
         <div className="mb-4 flex items-center justify-start">
           <div className="flex w-full max-w-md rounded-2xl shadow-md overflow-hidden border border-gray-300">
@@ -107,6 +105,9 @@ const Dashboard = () => {
             <button className="bg-blue-900 text-white p-3 hover:bg-blue-800 transition duration-500">
               🔍︎
             </button>
+          </div>
+          <div className="ml-auto">
+            <img src={logoAt} alt="logo da auto-telling" />
           </div>
         </div>
 
