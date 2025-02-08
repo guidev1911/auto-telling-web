@@ -263,9 +263,9 @@ const Dashboard = () => {
           <tbody>
             {carrosFiltrados.map((carro) => (
               <tr
-                key={carro.id}
+                //key={carro.id}
                 className="hover:bg-gray-200 cursor-pointer"
-                onClick={() => setCarroSelecionado(carro)} 
+                //onClick={() => setCarroSelecionado(carro)} 
               >
                 <td className="py-2 px-4 border">{carro.marca}</td>
                 <td className="py-2 px-4 border">{carro.modelo}</td>
