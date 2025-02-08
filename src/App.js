@@ -5,6 +5,7 @@ import Dashboard from '../src/pages/dashboard';
 import ProtectedRoute from '../src/components/protectedRoute';  
 import Financiamento from '../src/pages/financiamento';  
 import Ipva from '../src/pages/ipva'; 
+import Gerencia from '../src/pages/gerencia'; 
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         </Route>
         <Route path="/financiamento" element={<Financiamento />} />
         <Route path="/ipva" element={<Ipva />} />
+        <Route path="/gerencia" element={<Gerencia />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>

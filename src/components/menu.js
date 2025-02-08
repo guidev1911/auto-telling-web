@@ -7,6 +7,7 @@ const Menu = () => {
       <Link to="/dashboard">Dashboard</Link>
       <Link to="/financiamento">Financiamento</Link>
       <Link to="/ipva">IPVA</Link>
+      <Link to="/gerencia">Gerência</Link>
       <div id="btSair">
       <Link to="/login">Sair</Link>
       </div>
