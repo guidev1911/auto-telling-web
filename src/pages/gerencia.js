@@ -300,8 +300,14 @@ const Gerencia = () => {
 
         {carroSelecionado && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg w-1/2 shadow-lg">
-            <h2 className="text-xl font-bold mb-4">{carroSelecionado.modelo}</h2>
+            <div className="relative bg-white p-6 rounded-lg w-1/2 shadow-lg">
+              <h2 className="text-xl font-bold mb-4">{carroSelecionado.modelo}</h2>
+              <button
+                onClick={() => setCarroSelecionado(null)}
+                className="absolute top-2 right-2 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              >
+                X
+              </button>
             <p>
               <strong>Id:</strong> {carroSelecionado.id}
             </p>
@@ -355,10 +361,16 @@ const Gerencia = () => {
               <strong>Status:</strong> {carroSelecionado.status}
             </p>
               <button
-                onClick={() => setCarroSelecionado(null)}
-                className="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              onClick={() => setCarroSelecionado(null)}
+              className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600"
               >
-                Fechar
+                Alterar
+              </button>
+              <button
+              onClick={() => setCarroSelecionado(null)}
+              className="mt-4 ml-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              >
+                Deletar
               </button>
             </div>
           </div>
