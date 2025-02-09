@@ -25,7 +25,8 @@ const Gerencia = () => {
     tipo_tracao: "",
     ano_min: "",
     ano_max: "",
-    categoria: ""
+    categoria: "",
+    id: ""
   });
 
   useEffect(() => {
@@ -74,7 +75,8 @@ const Gerencia = () => {
       (filtros.tipo_tracao ? carro.tipo_tracao.toLowerCase().includes(filtros.tipo_tracao.toLowerCase()) : true) &&
       (filtros.ano_min ? carro.ano >= filtros.ano_min : true) &&
       (filtros.ano_max ? carro.ano <= filtros.ano_max : true) &&
-      (filtros.categoria ? carro.categoria.toLowerCase().includes(filtros.categoria.toLowerCase()) : true);
+      (filtros.categoria ? carro.categoria.toLowerCase().includes(filtros.categoria.toLowerCase()) : true) &&
+      (filtros.id ? carro.id === parseInt(filtros.id) : true) ;
 
     return filtroPesquisa && filtroFiltrosAvancados;
   });
@@ -242,6 +244,14 @@ const Gerencia = () => {
               placeholder="Categoria"
               name="categoria"
               value={filtros.categoria}
+              onChange={handleFiltroChange}
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="text"
+              placeholder="Buscar por id"
+              name="id"
+              value={filtros.id}
               onChange={handleFiltroChange}
               className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
