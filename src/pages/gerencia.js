@@ -89,6 +89,76 @@ const Gerencia = () => {
     }));
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [carData, setCarData] = useState({
+    marca: "",
+    modelo: "",
+    categoria: "",
+    ano: "",
+    cor: "",
+    quilometragem: "",
+    potencia: "",
+    motor: "",
+    zero_a_cem: "",
+    velocidade_final: "",
+    preco: "",
+    numero_portas: "",
+    tipo_tracao: "",
+    consumo_medio: "",
+    status: "",
+    caracteristicas: "",
+  });
+
+  const handleChange = (e) => {
+    setCarData({ ...carData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const formattedData = {
+      ...carData,
+      ano: carData.ano ? parseInt(carData.ano) : null,
+      quilometragem: carData.quilometragem ? parseInt(carData.quilometragem) : null,
+      potencia: carData.potencia ? parseInt(carData.potencia) : null,
+      zero_a_cem: carData.zero_a_cem ? parseFloat(carData.zero_a_cem) : null,
+      velocidade_final: carData.velocidade_final ? parseInt(carData.velocidade_final) : null,
+      preco: carData.preco ? parseFloat(carData.preco) : null,
+      numero_portas: carData.numero_portas ? parseInt(carData.numero_portas) : null,
+      consumo_medio: carData.consumo_medio ? carData.consumo_medio.replace(" km/l", "") : null,
+      tipo_tracao: carData.tipo_tracao,
+      status: carData.status === "Disponível" ? "Disponível" : "Indisponível",
+    };
+  
+    console.log("Enviando para API:", formattedData);
+  
+    const token = localStorage.getItem("token");
+  
+    try {
+      const response = await fetch("http://localhost:3001/carros", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(formattedData),
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        alert("Carro inserido com sucesso!");
+        setIsOpen(false);
+      } else {
+        console.error("Erro na resposta:", responseData);
+        alert(`Erro ao inserir carro: ${responseData.message || "Erro desconhecido"}`);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      alert("Falha ao conectar com o servidor.");
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <Menu />
@@ -118,6 +188,13 @@ const Gerencia = () => {
           onClick={() => setFiltrosAvancadosVisiveis(!filtrosAvancadosVisiveis)}
         >
           Filtros Avançados
+        </button>
+
+        <button
+        onClick={() => setIsOpen(true)}
+        className="ml-4 bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
+        >
+          Inserir novo carro
         </button>
 
         {filtrosAvancadosVisiveis && (
@@ -258,6 +335,40 @@ const Gerencia = () => {
           </div>
         )}
 
+      {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[70%] max-w-5xl">
+            <h2 className="text-xl font-bold mb-4 text-center">Adicionar Carro</h2>
+            <form onSubmit={handleSubmit} className="grid grid-cols-3 gap-4">
+              <input name="marca" placeholder="Marca" onChange={handleChange} className="input-base" required />
+              <input name="modelo" placeholder="Modelo" onChange={handleChange} className="input-base" required />
+              <input name="categoria" placeholder="Categoria" onChange={handleChange} className="input-base" required />
+              <input name="ano" type="number" placeholder="Ano" onChange={handleChange} className="input-base" required />
+              <input name="cor" placeholder="Cor" onChange={handleChange} className="input-base" required />
+              <input name="quilometragem" type="number" placeholder="Quilometragem" onChange={handleChange} className="input-base" required />
+              <input name="potencia" type="number" placeholder="Potência" onChange={handleChange} className="input-base" required />
+              <input name="motor" placeholder="Motor" onChange={handleChange} className="input-base" required />
+              <input name="zero_a_cem" type="number" step="0.1" placeholder="0 a 100 km/h (s)" onChange={handleChange} className="input-base" required />
+              <input name="velocidade_final" type="number" placeholder="Velocidade Final" onChange={handleChange} className="input-base" required />
+              <input name="preco" type="number" step="0.01" placeholder="Preço (R$)" onChange={handleChange} className="input-base" required />
+              <input name="numero_portas" type="number" placeholder="Nº de Portas" onChange={handleChange} className="input-base" required />
+              <input name="tipo_tracao" placeholder="Tipo de Tração" onChange={handleChange} className="input-base" required />
+              <input name="consumo_medio" placeholder="Consumo Médio" onChange={handleChange} className="input-base" required />
+              <select name="status" onChange={handleChange} className="input-base">
+                <option value="Disponível">Disponível</option>
+                <option value="Indisponível">Indisponível</option>
+              </select>
+              <textarea name="caracteristicas" placeholder="Características" onChange={handleChange} className="col-span-3 p-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+              
+              <div className="col-span-3 flex justify-between mt-4">
+                <button type="button" onClick={() => setIsOpen(false)} className="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
+                <button type="submit" className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
             <tr>
@@ -274,7 +385,7 @@ const Gerencia = () => {
           <tbody>
             {carrosFiltrados.map((carro) => (
               <tr
-                //key={carro.id}
+                key={carro.id}
                 className="hover:bg-gray-200 cursor-pointer"
                 //onClick={() => setCarroSelecionado(carro)} 
               >
@@ -300,7 +411,7 @@ const Gerencia = () => {
                   className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800"
                   onClick={() => setCarroSelecionado(carro)}
                 >
-                  Alterar
+                  Detalhes
                 </button>
               </td>
               </tr>
