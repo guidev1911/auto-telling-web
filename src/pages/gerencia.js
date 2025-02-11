@@ -158,6 +158,7 @@ const Gerencia = () => {
       alert("Falha ao conectar com o servidor.");
     }
   };
+  
 
   return (
     <div className="dashboard-container">
@@ -352,7 +353,12 @@ const Gerencia = () => {
               <input name="velocidade_final" type="number" placeholder="Velocidade Final" onChange={handleChange} className="input-base" required />
               <input name="preco" type="number" step="0.01" placeholder="Preço (R$)" onChange={handleChange} className="input-base" required />
               <input name="numero_portas" type="number" placeholder="Nº de Portas" onChange={handleChange} className="input-base" required />
-              <input name="tipo_tracao" placeholder="Tipo de Tração" onChange={handleChange} className="input-base" required />
+              <select name="tipo_tracao" onChange={handleChange} className="input-base" required>
+                <option value="">Selecione o tipo de tração</option>
+                <option value="Traseira">Traseira</option>
+                <option value="Dianteira">Dianteira</option>
+                <option value="Integral">Integral</option>
+              </select>
               <input name="consumo_medio" placeholder="Consumo Médio" onChange={handleChange} className="input-base" required />
               <select name="status" onChange={handleChange} className="input-base">
                 <option value="Disponível">Disponível</option>
