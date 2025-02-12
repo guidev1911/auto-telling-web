@@ -3,6 +3,8 @@ import "../styles/styles.css";
 import Menu from "../components/menu";
 import axios from "axios";
 import logoAt from "../images/logo-at.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Gerencia = () => {
   const [carros, setCarros] = useState([]); 
@@ -147,18 +149,20 @@ const Gerencia = () => {
       const responseData = await response.json();
   
       if (response.ok) {
-        alert("Carro inserido com sucesso!");
+        toast.success("Carro inserido com sucesso!", {
+          autoClose: 2000, 
+          onClose: () => window.location.reload(), 
+        });
         setIsOpen(false);
       } else {
         console.error("Erro na resposta:", responseData);
-        alert(`Erro ao inserir carro: ${responseData.message || "Erro desconhecido"}`);
+        toast.error(`❌ Erro ao inserir carro: ${responseData.message || "Erro desconhecido"}`);
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Falha ao conectar com o servidor.");
+      toast.error("⚠️ Falha ao conectar com o servidor.");
     }
   };
-  
 
   return (
     <div className="dashboard-container">

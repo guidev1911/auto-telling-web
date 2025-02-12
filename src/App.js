@@ -6,10 +6,14 @@ import ProtectedRoute from '../src/components/protectedRoute';
 import Financiamento from '../src/pages/financiamento';  
 import Ipva from '../src/pages/ipva'; 
 import Gerencia from '../src/pages/gerencia'; 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const App = () => {
   return (
     <Router>
+      <ToastContainer position="top-right" autoClose={2000} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute />} >
