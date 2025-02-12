@@ -129,7 +129,7 @@ const Gerencia = () => {
       numero_portas: carData.numero_portas ? parseInt(carData.numero_portas) : null,
       consumo_medio: carData.consumo_medio ? carData.consumo_medio.replace(" km/l", "") : null,
       tipo_tracao: carData.tipo_tracao,
-      status: carData.status === "Disponível" ? "Disponível" : "Indisponível",
+      status: carData.status,
     };
   
     console.log("Enviando para API:", formattedData);
