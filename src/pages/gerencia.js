@@ -91,7 +91,7 @@ const Gerencia = () => {
     }));
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenInserir, setIsOpenInserir] = useState(false);
   const [carData, setCarData] = useState({
     marca: "",
     modelo: "",
@@ -153,7 +153,7 @@ const Gerencia = () => {
           autoClose: 2000, 
           onClose: () => window.location.reload(), 
         });
-        setIsOpen(false);
+        setIsOpenInserir(false);
       } else {
         console.error("Erro na resposta:", responseData);
         toast.error(`❌ Erro ao inserir carro: ${responseData.message || "Erro desconhecido"}`);
@@ -164,9 +164,11 @@ const Gerencia = () => {
     }
   };
 
+  const [isOpenDeletar, setIsOpenDeletar] = useState(false);
+
   const handleDelete = () => {
     console.log("Carro excluído!");
-    setIsOpen(false);
+    setIsOpenDeletar(false);
   };
 
   return (
@@ -201,7 +203,7 @@ const Gerencia = () => {
         </button>
 
         <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpenInserir(true)}
         className="ml-4 bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
         >
           Inserir novo carro
@@ -345,7 +347,7 @@ const Gerencia = () => {
           </div>
         )}
 
-      {isOpen && (
+      {isOpenInserir && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-[70%] max-w-5xl">
             <h2 className="text-xl font-bold mb-4 text-center">Adicionar Carro</h2>
@@ -376,7 +378,7 @@ const Gerencia = () => {
               <textarea name="caracteristicas" placeholder="Características" onChange={handleChange} className="col-span-3 p-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" required />
               
               <div className="col-span-3 flex justify-between mt-4">
-                <button type="button" onClick={() => setIsOpen(false)} className="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
+                <button type="button" onClick={() => setIsOpenInserir(false)} className="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
                 <button type="submit" className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Salvar</button>
               </div>
             </form>
@@ -505,12 +507,12 @@ const Gerencia = () => {
 
               <button
                 className="mt-4 ml-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpenDeletar(true)}
               >
                 Deletar
               </button>
 
-              {isOpen && (
+              {isOpenDeletar && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                   <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
                     <h2 className="text-lg font-semibold text-gray-800">
@@ -519,7 +521,7 @@ const Gerencia = () => {
                     <div className="mt-4 flex justify-center gap-4">
                       <button
                         className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setIsOpenDeletar(false)}
                       >
                         Cancelar
                       </button>
