@@ -5,6 +5,7 @@ import axios from "axios";
 import logoAt from "../images/logo-at.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AlertCircle as LucideAlertCircle } from "lucide-react";
 
 const Gerencia = () => {
   const [carros, setCarros] = useState([]); 
@@ -169,6 +170,7 @@ const Gerencia = () => {
   const handleDelete = () => {
     console.log("Carro excluído!");
     setIsOpenDeletar(false);
+    setIsOpenInserir(false);
   };
 
   return (
@@ -439,68 +441,68 @@ const Gerencia = () => {
         {carroSelecionado && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="relative bg-white p-6 rounded-lg w-1/2 shadow-lg">
-              <h2 className="text-xl font-bold mb-4">{carroSelecionado.modelo}</h2>
+              <h2 className="text-3xl font-extrabold tracking-wide mb-4 font-sans">{carroSelecionado.modelo}</h2>
               <button
                 onClick={() => setCarroSelecionado(null)}
                 className="absolute top-2 right-2 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
               >
                 X
               </button>
-            <p>
-              <strong>Id:</strong> {carroSelecionado.id}
-            </p>
-            <p>
-              <strong>Marca:</strong> {carroSelecionado.marca}
-            </p>
-            <p>
-              <strong>Modelo:</strong> {carroSelecionado.modelo}
-            </p>
-            <p>
-              <strong>Categoria:</strong> {carroSelecionado.categoria}
-            </p>
-            <p>
-              <strong>Ano:</strong> {carroSelecionado.ano}
-            </p>
-            <p>
-              <strong>Cor:</strong> {carroSelecionado.cor}
-            </p>
-            <p>
-              <strong>Quilometragem:</strong> {carroSelecionado.quilometragem} km
-            </p>
-            <p>
-              <strong>Potência:</strong> {carroSelecionado.potencia} cv
-            </p>
-            <p>
-              <strong>Motor:</strong> {carroSelecionado.motor}
-            </p>
-            <p>
-              <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
-            </p>
-            <p>
-              <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
-            </p>
-            <p>
-              <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
-            </p>
-            <p>
-              <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
-            </p>
-            <p>
-              <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
-            </p>
-            <p>
-              <strong>Características:</strong> {carroSelecionado.caracteristicas}
-            </p>
-            <p>
-              <strong>Preço:</strong> R${" "}
-              {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-            </p>
-            <p>
-              <strong>Status:</strong> {carroSelecionado.status}
-            </p>
+              <p>
+                <strong>Id:</strong> {carroSelecionado.id}
+              </p>
+              <p>
+                <strong>Marca:</strong> {carroSelecionado.marca}
+              </p>
+              <p>
+                <strong>Modelo:</strong> {carroSelecionado.modelo}
+              </p>
+              <p>
+                <strong>Categoria:</strong> {carroSelecionado.categoria}
+              </p>
+              <p>
+                <strong>Ano:</strong> {carroSelecionado.ano}
+              </p>
+              <p>
+                <strong>Cor:</strong> {carroSelecionado.cor}
+              </p>
+              <p>
+                <strong>Quilometragem:</strong> {carroSelecionado.quilometragem} km
+              </p>
+              <p>
+                <strong>Potência:</strong> {carroSelecionado.potencia} cv
+              </p>
+              <p>
+                <strong>Motor:</strong> {carroSelecionado.motor}
+              </p>
+              <p>
+                <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
+              </p>
+              <p>
+                <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
+              </p>
+              <p>
+                <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
+              </p>
+              <p>
+                <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
+              </p>
+              <p>
+                <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
+              </p>
+              <p>
+                <strong>Características:</strong> {carroSelecionado.caracteristicas}
+              </p>
+              <p>
+                <strong>Preço:</strong> R${" "}
+                {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+              </p>
+              <p>
+                <strong>Status:</strong> {carroSelecionado.status}
+              </p>
               <button
               onClick={() => setCarroSelecionado(null)}
-              className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600"
+              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
               >
                 Alterar
               </button>
@@ -515,7 +517,8 @@ const Gerencia = () => {
               {isOpenDeletar && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                   <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
-                    <h2 className="text-lg font-semibold text-gray-800">
+                  <LucideAlertCircle className="w-8 h-8 text-red-600 mb-2 mx-auto" />
+                    <h2 className="text-lg font-bold text-gray-800 font-sans">
                       Deseja excluir esse carro do estoque?
                     </h2>
                     <div className="mt-4 flex justify-center gap-4">
