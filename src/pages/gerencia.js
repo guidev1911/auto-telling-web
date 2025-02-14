@@ -448,58 +448,41 @@ const Gerencia = () => {
               >
                 X
               </button>
-              <p>
-                <strong>Id:</strong> {carroSelecionado.id}
-              </p>
-              <p>
-                <strong>Marca:</strong> {carroSelecionado.marca}
-              </p>
-              <p>
-                <strong>Modelo:</strong> {carroSelecionado.modelo}
-              </p>
-              <p>
-                <strong>Categoria:</strong> {carroSelecionado.categoria}
-              </p>
-              <p>
-                <strong>Ano:</strong> {carroSelecionado.ano}
-              </p>
-              <p>
-                <strong>Cor:</strong> {carroSelecionado.cor}
-              </p>
-              <p>
-                <strong>Quilometragem:</strong> {carroSelecionado.quilometragem} km
-              </p>
-              <p>
-                <strong>Potência:</strong> {carroSelecionado.potencia} cv
-              </p>
-              <p>
-                <strong>Motor:</strong> {carroSelecionado.motor}
-              </p>
-              <p>
-                <strong>Consumo médio Km/L:</strong> {carroSelecionado.consumo_medio}
-              </p>
-              <p>
-                <strong>0km/h a 100km/h:</strong> {carroSelecionado.zero_a_cem} s
-              </p>
-              <p>
-                <strong>Velocidade Final:</strong> {carroSelecionado.velocidade_final} km/h
-              </p>
-              <p>
-                <strong>Número de portas:</strong> {carroSelecionado.numero_portas}
-              </p>
-              <p>
-                <strong>Tração:</strong> {carroSelecionado.tipo_tracao}
-              </p>
-              <p>
-                <strong>Características:</strong> {carroSelecionado.caracteristicas}
-              </p>
-              <p>
-                <strong>Preço:</strong> R${" "}
-                {parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-              </p>
-              <p>
-                <strong>Status:</strong> {carroSelecionado.status}
-              </p>
+              <div className="w-full overflow-x-auto max-h-96 border border-blue-800 rounded-lg">
+                <table className="w-full border-collapse text-white">
+                  <tbody>
+                    {[
+                      ["Id", carroSelecionado.id],
+                      ["Marca", carroSelecionado.marca],
+                      ["Modelo", carroSelecionado.modelo],
+                      ["Categoria", carroSelecionado.categoria],
+                      ["Ano", carroSelecionado.ano],
+                      ["Cor", carroSelecionado.cor],
+                      ["Quilometragem", `${carroSelecionado.quilometragem} km`],
+                      ["Potência", `${carroSelecionado.potencia} cv`],
+                      ["Motor", carroSelecionado.motor],
+                      ["Consumo médio Km/L", carroSelecionado.consumo_medio],
+                      ["0km/h a 100km/h", `${carroSelecionado.zero_a_cem} s`],
+                      ["Velocidade Final", `${carroSelecionado.velocidade_final} km/h`],
+                      ["Número de portas", carroSelecionado.numero_portas],
+                      ["Tração", carroSelecionado.tipo_tracao],
+                      ["Características", carroSelecionado.caracteristicas],
+                      [
+                        "Preço",
+                        `R$ ${parseFloat(carroSelecionado.preco).toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                        })}`,
+                      ],
+                      ["Status", carroSelecionado.status],
+                    ].map(([label, value], index) => (
+                      <tr key={index} className="border border-white-600">
+                        <td className="px-4 py-2 font-semibold text-right bg-gray-900">{label}:</td>
+                        <td className="px-4 py-2 bg-gray-500">{value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <button
               onClick={() => setCarroSelecionado(null)}
               className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
