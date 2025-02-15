@@ -374,6 +374,7 @@ const Gerencia = () => {
               </select>
               <input name="consumo_medio" placeholder="Consumo Médio" onChange={handleChange} className="input-base" required />
               <select name="status" onChange={handleChange} className="input-base">
+              <option value="">Selecione a status</option>
                 <option value="Disponível">Disponível</option>
                 <option value="Indisponível">Indisponível</option>
               </select>
