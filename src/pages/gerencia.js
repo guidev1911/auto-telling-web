@@ -167,12 +167,30 @@ const Gerencia = () => {
 
   const [isOpenDeletar, setIsOpenDeletar] = useState(false);
 
-  const handleDelete = () => {
-    console.log("Carro excluído!");
-    setIsOpenDeletar(false);
-    setIsOpenInserir(false);
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+  
+    try {
+      const response = await fetch(`http://localhost:3001/carros/${carroSelecionado.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        setIsOpenDeletar(false)
+        setCarroSelecionado(null)
+      } else {
+        const errorData = await response.json();
+        console.error("❌ Erro ao excluir carro:", errorData.message || response.statusText);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+    }
   };
-
+  
   return (
     <div className="dashboard-container">
       <Menu />
@@ -499,6 +517,7 @@ const Gerencia = () => {
               </button>
 
               {isOpenDeletar && (
+                
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                   <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
                   <LucideAlertCircle className="w-8 h-8 text-red-600 mb-2 mx-auto" />
