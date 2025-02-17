@@ -175,19 +175,26 @@ const Gerencia = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,   
         },
       });
   
       if (response.ok) {
         setIsOpenDeletar(false)
         setCarroSelecionado(null)
+
+        toast.warn("Carro excluído com sucesso!", {
+          autoClose: 2000, 
+          onClose: () => window.location.reload(), 
+        });
       } else {
         const errorData = await response.json();
-        console.error("❌ Erro ao excluir carro:", errorData.message || response.statusText);
+        console.error("Erro ao excluir carro:", errorData.message || response.statusText);
+        toast.error(`❌ Erro ao excluir carro: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Erro:", error);
+      toast.error("⚠️ Falha ao conectar com o servidor.");
     }
   };
   
