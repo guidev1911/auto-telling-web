@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AlertCircle as LucideAlertCircle } from "lucide-react";
 import { io } from "socket.io-client";
+import EditCarModal from "../components/editCarModal";
 
 const socket = io("http://localhost:3001");
 
@@ -194,6 +195,33 @@ const Gerencia = () => {
         const errorData = await response.json();
         console.error("Erro ao excluir carro:", errorData.message || response.statusText);
         toast.error(`❌ Erro ao excluir carro: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      toast.error("⚠️ Falha ao conectar com o servidor.");
+    }
+  };
+
+  const [isOpenEditar, setIsOpenEditar] = useState(false); 
+
+  const handleUpdate = async (updatedData) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`http://localhost:3001/carros/${updatedData.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        toast.success("Carro atualizado com sucesso!");
+        setIsOpenEditar(false); 
+      } else {
+        console.error("Erro na resposta:", responseData);
+        toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
       }
     } catch (error) {
       console.error("Erro:", error);
@@ -416,7 +444,13 @@ const Gerencia = () => {
           </div>
         </div>
       )}
-
+      
+      <EditCarModal
+        isOpen={isOpenEditar}
+        setIsOpen={setIsOpenEditar}
+        carData={carroSelecionado || {}}
+        onSubmit={handleUpdate}
+      />
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
             <tr>
@@ -513,8 +547,11 @@ const Gerencia = () => {
                 </table>
               </div>
               <button
-              onClick={() => setCarroSelecionado(null)}
-              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                onClick={() => {
+                  setIsOpenEditar(true);
+                  setCarroSelecionado(null);
+                }}
               >
                 Alterar
               </button>
