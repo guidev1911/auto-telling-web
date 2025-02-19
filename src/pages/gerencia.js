@@ -224,6 +224,7 @@ const Gerencia = () => {
       if (response.ok) {
         toast.success("Carro atualizado com sucesso!");
         setIsOpenEditar(false);
+        setCarroSelecionado(null);
       } else {
         console.error("Erro na resposta:", responseData);
         toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
