@@ -206,19 +206,24 @@ const Gerencia = () => {
 
   const handleUpdate = async (updatedData) => {
     const token = localStorage.getItem("token");
+  
+    const { id, ...dataWithoutId } = updatedData;
+  
     try {
-      const response = await fetch(`http://localhost:3001/carros/${updatedData.id}`, {
+      const response = await fetch(`http://localhost:3001/carros/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(dataWithoutId), 
       });
+  
       const responseData = await response.json();
+  
       if (response.ok) {
         toast.success("Carro atualizado com sucesso!");
-        setIsOpenEditar(false); 
+        setIsOpenEditar(false);
       } else {
         console.error("Erro na resposta:", responseData);
         toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
@@ -228,6 +233,7 @@ const Gerencia = () => {
       toast.error("⚠️ Falha ao conectar com o servidor.");
     }
   };
+  
   
   return (
     <div className="dashboard-container">
@@ -502,7 +508,7 @@ const Gerencia = () => {
         </table>
 
         {carroSelecionado && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
             <div className="relative bg-white p-6 rounded-lg w-1/2 shadow-lg">
               <h2 className="text-3xl font-extrabold tracking-wide mb-4 font-sans">{carroSelecionado.modelo}</h2>
               <button
@@ -550,7 +556,6 @@ const Gerencia = () => {
                 className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
                 onClick={() => {
                   setIsOpenEditar(true);
-                  setCarroSelecionado(null);
                 }}
               >
                 Alterar
