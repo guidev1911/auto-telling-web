@@ -5,7 +5,7 @@ import Menu from '../components/menu';
 const aliquotas = {
   AC: 2, AL: 2.5, AM: 3, AP: 3, BA: 2.5, CE: 3, DF: 3.5, ES: 2, GO: 3.5, MA: 3, MT: 3,
   MS: 3.5, MG: 4, PA: 2.5, PB: 3, PR: 3.5, PE: 3, PI: 3, RJ: 4, RN: 3, RS: 3, RO: 2.5,
-  RR: 3, SC: 2, SE: 2.5, SP: 4,TO: 3,
+  RR: 3, SC: 2, SE: 2.5, SP: 4, TO: 3,
 };
 
 const nomesEstados = {
@@ -22,10 +22,9 @@ const Ipva = () => {
   const [resultado, setResultado] = useState(null);
 
   const formatarValor = (valor) => {
-    return valor
-      .replace(/\D/g, '') 
-      .replace(/(\d)(\d{3})(\d{3})?$/, '$1.$2.$3') 
-      .replace(/(\d)(\d{3})$/, '$1.$2'); 
+    const numeroLimpo = valor.replace(/\D/g, ''); 
+    const numero = parseFloat(numeroLimpo) / 100; 
+    return numero.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   };
 
   const formatarMoeda = (valor) => {
@@ -36,14 +35,19 @@ const Ipva = () => {
   };
 
   const handleInputChange = (e) => {
-    setValorCarro(formatarValor(e.target.value));
+    const valorDigitado = e.target.value;
+    if (!valorDigitado) {
+      setValorCarro('');
+      return;
+    }
+    setValorCarro(formatarValor(valorDigitado));
   };
 
   const calcularIpva = () => {
-    const valor = parseFloat(valorCarro.replace(/\./g, ''));
+    const valorNumerico = parseFloat(valorCarro.replace(/\./g, '').replace(',', '.')); 
     const aliquota = aliquotas[estado];
-    if (!isNaN(valor) && aliquota) {
-      const ipva = valor * (aliquota / 100);
+    if (!isNaN(valorNumerico) && aliquota) {
+      const ipva = valorNumerico * (aliquota / 100);
       setResultado({
         estado: nomesEstados[estado],
         valor: formatarMoeda(ipva),
@@ -52,7 +56,6 @@ const Ipva = () => {
       setResultado(null);
     }
   };
-
 
   return (
     <div className="dashboard-container">
@@ -69,7 +72,7 @@ const Ipva = () => {
               type="text"
               value={valorCarro}
               onChange={handleInputChange}
-              placeholder="Ex.: 50.000"
+              placeholder="Ex.: 50.000,00"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -93,7 +96,7 @@ const Ipva = () => {
           </div>
           <button
             onClick={calcularIpva}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800 transition"
           >
             Calcular IPVA
           </button>
