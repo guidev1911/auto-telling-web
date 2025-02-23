@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
-const EditCarModal = ({ isOpen, setIsOpen, carData, onSubmit }) => {
+const EditCarModal = ({ isOpen, setIsOpen, carData, modalClose }) => {
   const [formData, setFormData] = useState(carData);
 
   useEffect(() => {
@@ -13,7 +14,38 @@ const EditCarModal = ({ isOpen, setIsOpen, carData, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    handleUpdate(formData);
+  };
+
+  const handleUpdate = async (updatedData) => {
+    const token = localStorage.getItem("token");
+  
+    const { id, ...dataWithoutId } = updatedData;
+  
+    try {
+      const response = await fetch(`http://localhost:3001/carros/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataWithoutId), 
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        toast.success("Carro atualizado com sucesso!");
+        setIsOpen(false);
+        modalClose();
+      } else {
+        console.error("Erro na resposta:", responseData);
+        toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      toast.error("⚠️ Falha ao conectar com o servidor.");
+    }
   };
 
   if (!isOpen) return null;

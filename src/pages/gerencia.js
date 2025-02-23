@@ -104,6 +104,7 @@ const Gerencia = () => {
 
   const [isOpenInserir, setIsOpenInserir] = useState(false);
 
+  const [isOpenEditar, setIsOpenEditar] = useState(false); 
 
   const [isOpenDeletar, setIsOpenDeletar] = useState(false);
 
@@ -128,39 +129,6 @@ const Gerencia = () => {
         const errorData = await response.json();
         console.error("Erro ao excluir carro:", errorData.message || response.statusText);
         toast.error(`❌ Erro ao excluir carro: ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error("Erro:", error);
-      toast.error("⚠️ Falha ao conectar com o servidor.");
-    }
-  };
-
-  const [isOpenEditar, setIsOpenEditar] = useState(false); 
-
-  const handleUpdate = async (updatedData) => {
-    const token = localStorage.getItem("token");
-  
-    const { id, ...dataWithoutId } = updatedData;
-  
-    try {
-      const response = await fetch(`http://localhost:3001/carros/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(dataWithoutId), 
-      });
-  
-      const responseData = await response.json();
-  
-      if (response.ok) {
-        toast.success("Carro atualizado com sucesso!");
-        setIsOpenEditar(false);
-        setCarroSelecionado(null);
-      } else {
-        console.error("Erro na resposta:", responseData);
-        toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
       }
     } catch (error) {
       console.error("Erro:", error);
@@ -349,7 +317,7 @@ const Gerencia = () => {
         isOpen={isOpenEditar}
         setIsOpen={setIsOpenEditar}
         carData={carroSelecionado || {}}
-        onSubmit={handleUpdate}
+        modalClose={() => setCarroSelecionado(null)}
       />
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
