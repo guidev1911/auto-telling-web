@@ -111,7 +111,7 @@ const AddCarModal = ({ isOpen, onClose }) => {
           </select>
           <textarea name="caracteristicas" placeholder="Características" onChange={handleChange} className="col-span-3 p-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" required />
           <div className="col-span-3 flex justify-between mt-4">
-            <button type="button" onClick={() => onClose && onClose()} className="bg-gray-400 text-white px-4 py-2 rounded-md">Cancelar</button>
+            <button type="button" onClick={() => onClose && onClose()} className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500">Cancelar</button>
             <button type="submit" className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800">Salvar</button>
           </div>
         </form>
