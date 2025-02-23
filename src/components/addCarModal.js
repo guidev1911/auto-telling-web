@@ -21,8 +21,17 @@ const AddCarModal = ({ isOpen, onClose }) => {
     caracteristicas: "",
   });
 
+  const formatNumber = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  };
+
   const handleChange = (e) => {
-    setCarData({ ...carData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "quilometragem" || name === "preco") {
+      setCarData({ ...carData, [name]: formatNumber(value) });
+    } else {
+      setCarData({ ...carData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -30,11 +39,11 @@ const AddCarModal = ({ isOpen, onClose }) => {
     const formattedData = {
       ...carData,
       ano: carData.ano ? parseInt(carData.ano) : null,
-      quilometragem: carData.quilometragem ? parseInt(carData.quilometragem) : null,
+      quilometragem: carData.quilometragem ? parseInt(carData.quilometragem.replace(/\./g, "")) : null,
       potencia: carData.potencia ? parseInt(carData.potencia) : null,
       zero_a_cem: carData.zero_a_cem ? parseFloat(carData.zero_a_cem) : null,
       velocidade_final: carData.velocidade_final ? parseInt(carData.velocidade_final) : null,
-      preco: carData.preco ? parseFloat(carData.preco) : null,
+      preco: carData.preco ? parseFloat(carData.preco.replace(/\./g, "")) : null,
       numero_portas: carData.numero_portas ? parseInt(carData.numero_portas) : null,
       consumo_medio: carData.consumo_medio ? carData.consumo_medio.replace(" km/l", "") : null,
       tipo_tracao: carData.tipo_tracao,
@@ -81,12 +90,12 @@ const AddCarModal = ({ isOpen, onClose }) => {
           <input name="categoria" placeholder="Categoria" onChange={handleChange} className="input-base" required />
           <input name="ano" type="number" placeholder="Ano" onChange={handleChange} className="input-base" required />
           <input name="cor" placeholder="Cor" onChange={handleChange} className="input-base" required />
-          <input name="quilometragem" type="number" placeholder="Quilometragem" onChange={handleChange} className="input-base" required />
+          <input name="quilometragem" type="text" placeholder="Quilometragem" value={carData.quilometragem} onChange={handleChange} className="input-base" required />
           <input name="potencia" type="number" placeholder="Potência" onChange={handleChange} className="input-base" required />
           <input name="motor" placeholder="Motor" onChange={handleChange} className="input-base" required />
           <input name="zero_a_cem" type="number" step="0.1" placeholder="0 a 100 km/h (s)" onChange={handleChange} className="input-base" required />
           <input name="velocidade_final" type="number" placeholder="Velocidade Final" onChange={handleChange} className="input-base" required />
-          <input name="preco" type="number" step="0.01" placeholder="Preço (R$)" onChange={handleChange} className="input-base" required />
+          <input name="preco" type="text" placeholder="Preço (R$)" value={carData.preco} onChange={handleChange} className="input-base" required />
           <input name="numero_portas" type="number" placeholder="Nº de Portas" onChange={handleChange} className="input-base" required />
           <select name="tipo_tracao" onChange={handleChange} className="input-base" required>
             <option value="">Selecione o tipo de tração</option>
