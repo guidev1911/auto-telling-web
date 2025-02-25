@@ -336,7 +336,7 @@ const Gerencia = () => {
             {carrosFiltrados.map((carro) => (
               <tr
                 key={carro.id}
-                className="hover:bg-gray-200 cursor-pointer"
+                className="hover:bg-gray-300 cursor-pointer"
                 //onClick={() => setCarroSelecionado(carro)} 
               >
                 <td className="py-2 px-4 border">{carro.id}</td>
