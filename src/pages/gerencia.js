@@ -80,10 +80,10 @@ const Gerencia = () => {
       (filtros.velocidade_final ? parseFloat(carro.velocidade_final) >= filtros.velocidade_final : true) &&
       (filtros.zero_a_cem ? carro.zero_a_cem.toString().includes(filtros.zero_a_cem) : true) &&
       (filtros.status ? carro.status.includes(filtros.status) : true) &&
-      (filtros.preco_min ? parseFloat(carro.preco) >= filtros.preco_min : true) &&
-      (filtros.preco_max ? parseFloat(carro.preco) <= filtros.preco_max : true) &&
-      (filtros.quilometragem_min ? carro.quilometragem >= filtros.quilometragem_min : true) &&
-      (filtros.quilometragem_max ? carro.quilometragem <= filtros.quilometragem_max : true) &&
+      (filtros.preco_min ? parseFloat(carro.preco) >= parseFloat(filtros.preco_min.replace(/\./g, "")) : true) &&
+      (filtros.preco_max ? parseFloat(carro.preco) <= parseFloat(filtros.preco_max.replace(/\./g, "")) : true) &&
+      (filtros.quilometragem_min ? parseFloat(carro.quilometragem) >= parseFloat(filtros.quilometragem_min.replace(/\./g, "")) : true) &&
+      (filtros.quilometragem_max ? parseFloat(carro.quilometragem) <= parseFloat(filtros.quilometragem_max.replace(/\./g, "")) : true) &&
       (filtros.numero_portas ? carro.numero_portas === parseInt(filtros.numero_portas) : true) &&
       (filtros.tipo_tracao ? carro.tipo_tracao.toLowerCase().includes(filtros.tipo_tracao.toLowerCase()) : true) &&
       (filtros.ano_min ? carro.ano >= filtros.ano_min : true) &&
@@ -96,12 +96,29 @@ const Gerencia = () => {
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
+  
+    // Lista de campos que precisam de formatação
+    const camposFormatados = ["preco_min", "preco_max", "quilometragem_min", "quilometragem_max"];
+  
+    let novoValor = value;
+  
+    if (camposFormatados.includes(name)) {
+      // Remove tudo que não for número
+      const numeroLimpo = value.replace(/\D/g, "");
+  
+      // Adiciona separadores de milhar com ponto
+      if (numeroLimpo) {
+        novoValor = Number(numeroLimpo).toLocaleString("pt-BR").replace(",", ".");
+      }
+    }
+  
     setFiltros((prevFiltros) => ({
       ...prevFiltros,
-      [name]: value,
+      [name]: novoValor,
     }));
   };
-
+  
+  
   const [isOpenInserir, setIsOpenInserir] = useState(false);
 
   const [isOpenEditar, setIsOpenEditar] = useState(false); 
@@ -228,7 +245,7 @@ const Gerencia = () => {
             <option value="Indisponível">Indisponível</option>
           </select>
             <input
-              type="number"
+              type="text"
               placeholder="Preço Mínimo"
               name="preco_min"
               value={filtros.preco_min}
@@ -236,7 +253,7 @@ const Gerencia = () => {
               className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Preço Máximo"
               name="preco_max"
               value={filtros.preco_max}
@@ -244,7 +261,7 @@ const Gerencia = () => {
               className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Quilometragem Mínima"
               name="quilometragem_min"
               value={filtros.quilometragem_min}
@@ -252,7 +269,7 @@ const Gerencia = () => {
               className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
-              type="number"
+              type="text"
               placeholder="Quilometragem Máxima"
               name="quilometragem_max"
               value={filtros.quilometragem_max}
