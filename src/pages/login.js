@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/styles.css'; 
@@ -7,14 +7,34 @@ import logoAt from "../images/logo-at.png";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [lembrar, setLembrar] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('email');
+    const savedSenha = localStorage.getItem('senha');
+    if (savedEmail && savedSenha) {
+      setEmail(savedEmail);
+      setSenha(savedSenha);
+      setLembrar(true);
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/auth/login', { email, senha });
       localStorage.setItem('token', response.data.token);
+      
+      if (lembrar) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('senha', senha);
+      } else {
+        localStorage.removeItem('email');
+        localStorage.removeItem('senha');
+      }
+      
       navigate('/dashboard');
     } catch (err) {
       setError('Email ou senha incorretos');
@@ -51,6 +71,17 @@ const Login = () => {
               required
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
             />
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="lembrar"
+              checked={lembrar}
+              onChange={() => setLembrar(!lembrar)}
+              className="mr-2"
+            />
+            <label htmlFor="lembrar" className="text-sm text-black">Lembrar-me</label>
           </div>
   
           <button
