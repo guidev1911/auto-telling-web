@@ -94,7 +94,7 @@ body {
 
 .dashboard-menu {
     width: 250px;
-    background-color: #0B2A4C; 
+    background-color: #0B3674; 
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -132,7 +132,6 @@ body {
 
 #btSair {
     width: 250px;
-    background-color: #0B2A4C; 
     padding: 1rem;
     display: flex;
     flex-direction: column;
