@@ -40,7 +40,7 @@ const EditCarModal = ({ isOpen, setIsOpen, carData, modalClose }) => {
         modalClose();
       } else {
         console.error("Erro na resposta:", responseData);
-        toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Erro desconhecido"}`);
+        toast.error(`❌ Erro ao atualizar carro: ${responseData.message || "Dados inválidos encontrados!"}`);
       }
     } catch (error) {
       console.error("Erro:", error);
