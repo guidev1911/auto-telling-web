@@ -83,16 +83,13 @@ const Dashboard = () => {
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
   
-    // Lista de campos que precisam de formatação
     const camposFormatados = ["preco_min", "preco_max", "quilometragem_min", "quilometragem_max"];
   
     let novoValor = value;
   
     if (camposFormatados.includes(name)) {
-      // Remove tudo que não for número
       const numeroLimpo = value.replace(/\D/g, "");
   
-      // Adiciona separadores de milhar com ponto
       if (numeroLimpo) {
         novoValor = Number(numeroLimpo).toLocaleString("pt-BR").replace(",", ".");
       }
