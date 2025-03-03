@@ -39,6 +39,13 @@ const Menu = () => {
       >
         Gerência
       </Link>
+      <Link 
+        to="/admin" 
+        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/admin' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
+        onClick={() => handleClick('/admin')}
+      >
+        Administração
+      </Link>
       <div id="btSair">
         <Link 
           to="/login" 
