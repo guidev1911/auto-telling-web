@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/styles.css';
 import Menu from '../components/menu';
+import logoAt from "../images/logo-at.png";
 
 const aliquotas = {
   AC: 2, AL: 2.5, AM: 3, AP: 3, BA: 2.5, CE: 3, DF: 3.5, ES: 2, GO: 3.5, MA: 3, MT: 3,
@@ -61,7 +62,10 @@ const Ipva = () => {
     <div className="dashboard-container">
       <Menu />
       <div className="dashboard-content p-6 bg-gray-100 rounded-lg shadow-md">
+        <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Cálculo de IPVA</h1>
+        <img src={logoAt} alt="logo da auto-telling" className="h-20" />
+      </div>
         <div className="flex flex-col space-y-4">
           <div>
             <label htmlFor="valorCarro" className="block text-gray-700 font-semibold mb-2">

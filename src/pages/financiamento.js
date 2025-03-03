@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/styles.css'; 
 import Menu from '../components/menu';
+import logoAt from "../images/logo-at.png";
 
 const Financiamento = () => {
   const [nomeCliente, setNomeCliente] = useState('');
@@ -61,7 +62,10 @@ const Financiamento = () => {
     <div className="dashboard-container">
       <Menu />
       <div className="dashboard-content p-6 bg-gray-100 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Simular Financiamento</h1>
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-2xl font-bold text-gray-800">Simular Financiamento</h1>
+        <img src={logoAt} alt="logo da auto-telling" className="h-20" />
+      </div>
         <div className="flex flex-col space-y-4">
           <input
             type="text"
