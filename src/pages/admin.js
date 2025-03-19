@@ -143,10 +143,10 @@ const Admin = () => {
                 <td className="py-2 px-4 border">{user.email}</td>
                 <td className="py-2 px-4 border">{user.nivel}</td>
                 <td className="py-2 px-0 border text-center flex justify-center gap-3">
-                  <button className="px-6 py-2 bg-gray-700 text-white rounded hover:bg-blue-800 transition duration-200 ml-4">
+                  <button className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-blue-800 transition duration-200 ml-4">
                     Alterar
                   </button>
-                  <button className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 mr-4">
+                  <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 mr-4">
                     Excluir
                   </button>
                 </td>
