@@ -65,6 +65,12 @@ const Admin = () => {
             <img src={logoAt} alt="logo da auto-telling" />
           </div>
         </div>
+        <button
+          className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
+          onClick={"crie uma função para chamar aqui"}
+        >
+          Filtros Avançados
+        </button>
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
             <tr>
