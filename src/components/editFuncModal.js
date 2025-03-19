@@ -88,7 +88,7 @@ const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
               name="id"
               value={formData.id}
               disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-300"
             />
           </div>
 
@@ -99,7 +99,7 @@ const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
               name="nome"
               value={formData.nome}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="input-edit"
             />
           </div>
 
@@ -110,25 +110,28 @@ const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="input-edit"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Nível:</label>
-            <input
-              type="text"
+            <select
               name="nivel"
               value={formData.nivel}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
+              className="input-edit"
+            >
+              <option value="vendedor">vendedor</option>
+              <option value="gerente">gerente</option>
+              <option value="admin">admin</option>
+            </select>
           </div>
 
           <div className="flex justify-start gap-4 mt-6">
             <button
               type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
             >
               Salvar Alterações
             </button>
