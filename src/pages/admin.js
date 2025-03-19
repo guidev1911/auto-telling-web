@@ -7,6 +7,13 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [pesquisa, setPesquisa] = useState("");
+  const [filtrosVisiveis, setFiltrosVisiveis] = useState(false);
+  const [filtros, setFiltros] = useState({
+    id: "",
+    nome: "",
+    email: "",
+    nivel: "",
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,15 +46,27 @@ const Admin = () => {
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter(user => 
-    user.nome.toLowerCase().includes(pesquisa.toLowerCase())
-  );
+  // Função para alternar a exibição dos filtros avançados
+  const toggleFiltros = () => {
+    setFiltrosVisiveis(!filtrosVisiveis);
+  };
+
+  // Filtragem dos funcionários com base nos critérios avançados
+  const filteredUsers = users.filter((user) => {
+    return (
+      (filtros.id ? user.id.toString().includes(filtros.id) : true) &&
+      (filtros.nome ? user.nome.toLowerCase().includes(filtros.nome.toLowerCase()) : true) &&
+      (filtros.email ? user.email.toLowerCase().includes(filtros.email.toLowerCase()) : true) &&
+      (filtros.nivel ? user.nivel.toLowerCase().includes(filtros.nivel.toLowerCase()) : true)
+    );
+  });
 
   return (
     <div className="dashboard-container">
       <Menu />
       <div className="dashboard-content p-6 bg-gray-100 min-h-screen">
         {error && <p className="text-red-500">{error}</p>}
+
         <div className="mb-4 flex items-center justify-start">
           <div className="flex w-full max-w-md rounded-2xl shadow-md overflow-hidden border border-gray-300">
             <input
@@ -65,12 +84,47 @@ const Admin = () => {
             <img src={logoAt} alt="logo da auto-telling" />
           </div>
         </div>
+
         <button
-          className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
-          onClick={"crie uma função para chamar aqui"}
-        >
-          Filtros Avançados
+            className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
+            onClick={toggleFiltros}
+          >
+            Filtros Avançados
         </button>
+
+        {filtrosVisiveis && (
+            <div className="grid grid-cols-4 gap-4 mb-4">
+              <input
+                type="text"
+                placeholder="ID"
+                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={filtros.id}
+                onChange={(e) => setFiltros({ ...filtros, id: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Nome"
+                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={filtros.nome}
+                onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={filtros.email}
+                onChange={(e) => setFiltros({ ...filtros, email: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Nível"
+                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={filtros.nivel}
+                onChange={(e) => setFiltros({ ...filtros, nivel: e.target.value })}
+              />
+            </div>
+        )}
+
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
           <thead className="bg-blue-900 text-white">
             <tr>
@@ -90,7 +144,7 @@ const Admin = () => {
                 <td className="py-2 px-4 border">{user.nivel}</td>
                 <td className="py-2 px-0 border text-center flex justify-center gap-3">
                   <button className="px-6 py-2 bg-gray-700 text-white rounded hover:bg-blue-800 transition duration-200 ml-4">
-                    Alterar 
+                    Alterar
                   </button>
                   <button className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 mr-4">
                     Excluir
