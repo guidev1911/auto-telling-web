@@ -3,6 +3,7 @@ import "../styles/styles.css";
 import Menu from "../components/menu";
 import logoAt from "../images/logo-at.png";
 import EditFuncModal from "../components/editFuncModal";
+import { AlertCircle as LucideAlertCircle } from "lucide-react";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -17,6 +18,8 @@ const Admin = () => {
   });
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -62,6 +65,35 @@ const Admin = () => {
     setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
   };
 
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!token || !userToDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/auth/user/${userToDelete.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao excluir funcionário");
+      }
+
+      setUsers(users.filter((user) => user.id !== userToDelete.id));
+      setIsDeleteModalOpen(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const filteredUsers = users.filter((user) => {
     return (
       (filtros.id ? user.id.toString().includes(filtros.id) : true) &&
@@ -96,43 +128,43 @@ const Admin = () => {
         </div>
 
         <button
-            className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
-            onClick={toggleFiltros}
-          >
-            Filtros Avançados
+          className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
+          onClick={toggleFiltros}
+        >
+          Filtros Avançados
         </button>
 
         {filtrosVisiveis && (
-            <div className="grid grid-cols-4 gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="ID"
-                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={filtros.id}
-                onChange={(e) => setFiltros({ ...filtros, id: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Nome"
-                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={filtros.nome}
-                onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Email"
-                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={filtros.email}
-                onChange={(e) => setFiltros({ ...filtros, email: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Nível"
-                className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={filtros.nivel}
-                onChange={(e) => setFiltros({ ...filtros, nivel: e.target.value })}
-              />
-            </div>
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="ID"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={filtros.id}
+              onChange={(e) => setFiltros({ ...filtros, id: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Nome"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={filtros.nome}
+              onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={filtros.email}
+              onChange={(e) => setFiltros({ ...filtros, email: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Nível"
+              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={filtros.nivel}
+              onChange={(e) => setFiltros({ ...filtros, nivel: e.target.value })}
+            />
+          </div>
         )}
 
         <table className="w-full bg-white shadow-md rounded-lg border border-gray-300">
@@ -153,10 +185,16 @@ const Admin = () => {
                 <td className="py-2 px-4 border">{user.email}</td>
                 <td className="py-2 px-4 border">{user.nivel}</td>
                 <td className="py-2 px-0 border text-center flex justify-center gap-3">
-                  <button onClick={() => handleEditClick(user)} className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-blue-800 transition duration-200 ml-4">
+                  <button
+                    onClick={() => handleEditClick(user)}
+                    className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-blue-800 transition duration-200 ml-4"
+                  >
                     Alterar
                   </button>
-                  <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 mr-4">
+                  <button
+                    onClick={() => handleDeleteClick(user)}
+                    className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200 mr-4"
+                  >
                     Excluir
                   </button>
                 </td>
@@ -165,7 +203,37 @@ const Admin = () => {
           </tbody>
         </table>
 
-        <EditFuncModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} user={selectedUser} onUpdate={handleUpdateUser} />
+        <EditFuncModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          user={selectedUser}
+          onUpdate={handleUpdateUser}
+        />
+
+        {isDeleteModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+        <LucideAlertCircle className="w-8 h-8 text-red-600 mb-2 mx-auto" />
+          <h2 className="text-lg font-bold text-gray-800 font-sans">
+            Deseja excluir esse carro do estoque?
+          </h2>
+          <div className="mt-4 flex justify-center gap-4">
+            <button
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
+              onClick={handleDeleteUser}
+            >
+              Confirmar
+            </button>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+        </div>
+        )}
       </div>
     </div>
   );
