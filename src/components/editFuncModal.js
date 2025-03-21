@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -68,6 +69,7 @@ const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
       const data = await response.json();
       onUpdate(data);
       onClose();
+      toast.success("Usuário atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar funcionário:", error);
       alert("Erro ao atualizar os dados. Tente novamente.");
@@ -79,7 +81,7 @@ const EditFuncModal = ({ isOpen, onClose, user, onUpdate }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Editar Funcionário</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Editar usuário</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">ID:</label>
