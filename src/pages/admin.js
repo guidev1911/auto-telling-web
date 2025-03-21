@@ -99,9 +99,10 @@ const Admin = () => {
       (filtros.id ? user.id.toString().includes(filtros.id) : true) &&
       (filtros.nome ? user.nome.toLowerCase().includes(filtros.nome.toLowerCase()) : true) &&
       (filtros.email ? user.email.toLowerCase().includes(filtros.email.toLowerCase()) : true) &&
-      (filtros.nivel ? user.nivel.toLowerCase().includes(filtros.nivel.toLowerCase()) : true)
+      (filtros.nivel ? user.nivel.toLowerCase().includes(filtros.nivel.toLowerCase()) : true) &&
+      (pesquisa ? user.nome.toLowerCase().includes(pesquisa.toLowerCase()) : true) // Aqui aplica o filtro de pesquisa
     );
-  });
+  });  
 
   return (
     <div className="dashboard-container">
@@ -113,7 +114,7 @@ const Admin = () => {
           <div className="flex w-full max-w-md rounded-2xl shadow-md overflow-hidden border border-gray-300">
             <input
               type="text"
-              placeholder="Pesquisar por nome do funcionário"
+              placeholder="Pesquisar por nome do usuário"
               className="p-3 w-full focus:outline-none text-gray-700 placeholder-gray-400"
               value={pesquisa}
               onChange={(e) => setPesquisa(e.target.value)}
