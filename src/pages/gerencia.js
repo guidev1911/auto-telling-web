@@ -432,7 +432,7 @@ const Gerencia = () => {
                 </table>
               </div>
               <button
-                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
                 onClick={() => {
                   setIsOpenEditar(true);
                 }}
@@ -456,17 +456,17 @@ const Gerencia = () => {
                       Deseja excluir esse carro do estoque?
                     </h2>
                     <div className="mt-4 flex justify-center gap-4">
-                      <button
-                        className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
-                        onClick={() => setIsOpenDeletar(false)}
-                      >
-                        Cancelar
-                      </button>
-                      <button
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                       <button
+                        className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
                         onClick={handleDelete}
                       >
                         Confirmar
+                      </button>
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                        onClick={() => setIsOpenDeletar(false)}
+                      >
+                        Cancelar
                       </button>
                     </div>
                   </div>

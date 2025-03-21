@@ -238,19 +238,19 @@ const EditCarModal = ({ isOpen, setIsOpen, carData, modalClose }) => {
               ></textarea>
             </div>
           </div>
-          <div className="flex justify-end gap-4 mt-6">
+          <div className="flex justify-start gap-4 mt-6">
+            <button
+              type="submit"
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
+            >
+              Salvar Alterações
+            </button>
             <button
               type="button"
-              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               onClick={() => setIsOpen(false)}
             >
               Cancelar
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Salvar Alterações
             </button>
           </div>
         </form>
