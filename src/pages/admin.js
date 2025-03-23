@@ -4,6 +4,7 @@ import Menu from "../components/menu";
 import logoAt from "../images/logo-at.png";
 import EditFuncModal from "../components/editFuncModal";
 import { AlertCircle as LucideAlertCircle } from "lucide-react";
+import AddFuncModal from "../components/addFuncModal";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -20,6 +21,7 @@ const Admin = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -100,7 +102,7 @@ const Admin = () => {
       (filtros.nome ? user.nome.toLowerCase().includes(filtros.nome.toLowerCase()) : true) &&
       (filtros.email ? user.email.toLowerCase().includes(filtros.email.toLowerCase()) : true) &&
       (filtros.nivel ? user.nivel.toLowerCase().includes(filtros.nivel.toLowerCase()) : true) &&
-      (pesquisa ? user.nome.toLowerCase().includes(pesquisa.toLowerCase()) : true) // Aqui aplica o filtro de pesquisa
+      (pesquisa ? user.nome.toLowerCase().includes(pesquisa.toLowerCase()) : true) 
     );
   });  
 
@@ -134,6 +136,13 @@ const Admin = () => {
         >
           Filtros Avançados
         </button>
+        <button
+        className="ml-4 bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
+        onClick={() => setIsModalOpen(true)}
+        >
+          Inserir novo usuário
+        </button>
+        {isModalOpen && <AddFuncModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
 
         {filtrosVisiveis && (
           <div className="grid grid-cols-4 gap-4 mb-4">
