@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify"; 
 
 const AddFuncModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -8,8 +9,6 @@ const AddFuncModal = ({ isOpen, onClose }) => {
     senha: "",
     nivel: ""  
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,19 +16,16 @@ const AddFuncModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post("http://localhost:3001/auth/register", formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert("Usuário cadastrado com sucesso!");
+
+      toast.success("Usuário cadastrado com sucesso!");
       onClose();
     } catch (err) {
-      setError("Erro ao cadastrar usuário");
-    } finally {
-      setLoading(false);
+      toast.error("Erro ao cadastrar usuário");
     }
   };
 
@@ -79,13 +75,11 @@ const AddFuncModal = ({ isOpen, onClose }) => {
             <option value="gerente">gerente</option>
             <option value="admin">admin</option>
           </select>
-          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
-            disabled={loading}
             className="w-full py-2 bg-blue-500 text-white rounded-md"
           >
-            {loading ? "Cadastrando..." : "Cadastrar"}
+            Cadastrar
           </button>
         </form>
         <button
