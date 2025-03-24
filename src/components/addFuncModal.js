@@ -32,17 +32,17 @@ const AddFuncModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-xl font-semibold mb-4">Adicionar Usuário</h2>
-        <form onSubmit={handleSubmit}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 className="text-2xl font-semibold mb-4 text-center">Adicionar usuário</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             name="nome"
             placeholder="Nome"
             value={formData.nome}
             onChange={handleChange}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="input-edit"
             required
           />
           <input
@@ -51,7 +51,7 @@ const AddFuncModal = ({ isOpen, onClose }) => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="input-edit"
             required
           />
           <input
@@ -60,14 +60,14 @@ const AddFuncModal = ({ isOpen, onClose }) => {
             placeholder="Senha"
             value={formData.senha}
             onChange={handleChange}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="input-edit"
             required
           />
           <select
             name="nivel"
             value={formData.nivel}
             onChange={handleChange}
-            className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+            className="input-edit"
             required
           >
             <option value="">Selecione o nível</option>
@@ -75,19 +75,22 @@ const AddFuncModal = ({ isOpen, onClose }) => {
             <option value="gerente">gerente</option>
             <option value="admin">admin</option>
           </select>
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-md"
-          >
-            Cadastrar
-          </button>
+            <div className="flex justify-start gap-4 mt-6">
+              <button
+                type="submit"
+                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-blue-900"
+              >
+                Cadastrar
+              </button>
+
+              <button
+              onClick={onClose}
+              className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500"
+            >
+              Fechar
+            </button>
+          </div>
         </form>
-        <button
-          onClick={onClose}
-          className="mt-4 text-gray-500 hover:text-gray-700"
-        >
-          Fechar
-        </button>
       </div>
     </div>
   );
