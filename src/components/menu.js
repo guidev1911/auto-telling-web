@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Menu = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
+  const [nomeUsuario, setNomeUsuario] = useState('');
+
+  useEffect(() => {
+    const nome = localStorage.getItem('nome');
+    if (nome) {
+      setNomeUsuario(nome);
+    }
+  }, []);
 
   const handleClick = (path) => {
     setActiveLink(path);
   };
-  
+
   return (
     <div className="w-[250px] bg-[#0B3674] p-4 flex flex-col items-center text-white fixed h-full">
+      <div className="mb-6 text-center text-lg">
+        {nomeUsuario ? `Olá, ${nomeUsuario}` : 'Olá, visitante'}
+      </div>
+      
       <Link 
         to="/dashboard" 
         className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/dashboard' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}

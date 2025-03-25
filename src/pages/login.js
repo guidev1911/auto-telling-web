@@ -26,7 +26,7 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:3001/auth/login', { email, senha });
       localStorage.setItem('token', response.data.token);
-      
+
       if (lembrar) {
         localStorage.setItem('email', email);
         localStorage.setItem('senha', senha);
@@ -34,7 +34,16 @@ const Login = () => {
         localStorage.removeItem('email');
         localStorage.removeItem('senha');
       }
-      
+
+      const userResponse = await axios.get('http://localhost:3001/auth/user', {
+        headers: { Authorization: `Bearer ${response.data.token}` }
+      });
+
+      const usuario = userResponse.data.find(user => user.email === email);
+      if (usuario) {
+        localStorage.setItem('nome', usuario.nome);
+      }
+
       navigate('/dashboard');
     } catch (err) {
       setError('Email ou senha incorretos');
