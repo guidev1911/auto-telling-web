@@ -134,7 +134,7 @@ const Admin = () => {
           className="bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
           onClick={toggleFiltros}
         >
-          Filtros Avançados
+          Filtros avançados
         </button>
         <button
         className="ml-4 bg-blue-900 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-800"
@@ -167,13 +167,16 @@ const Admin = () => {
               value={filtros.email}
               onChange={(e) => setFiltros({ ...filtros, email: e.target.value })}
             />
-            <input
-              type="text"
-              placeholder="Nível"
-              className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={filtros.nivel}
-              onChange={(e) => setFiltros({ ...filtros, nivel: e.target.value })}
-            />
+          <select
+            className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={filtros.nivel}
+            onChange={(e) => setFiltros({ ...filtros, nivel: e.target.value })}
+          >
+            <option value="">Selecione o nível</option>
+            <option value="vendedor">vendedor</option>
+            <option value="gerente">gerente</option>
+            <option value="admin">admin</option>
+          </select>
           </div>
         )}
 
