@@ -5,6 +5,10 @@ import logoAt from "../images/logo-at.png";
 import EditFuncModal from "../components/editFuncModal";
 import { AlertCircle as LucideAlertCircle } from "lucide-react";
 import AddFuncModal from "../components/addFuncModal";
+import { io } from "socket.io-client";
+import axios from "axios";
+
+const socket = io("http://localhost:3001");
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -22,36 +26,38 @@ const Admin = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [erro, setErro] = useState(""); 
 
-  useEffect(() => {
-    const fetchUsers = async () => {
+  const buscarUsuarios = async () => {
+    try {
       const token = localStorage.getItem("token");
+
       if (!token) {
-        setError("Token não encontrado. Faça login novamente.");
+        setErro("Usuário não autenticado. Faça login novamente.");
         return;
       }
 
-      try {
-        const response = await fetch("http://localhost:3001/auth/user", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      const resposta = await axios.get("http://localhost:3001/auth/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error("Erro ao buscar funcionários");
-        }
+      setUsers(resposta.data);
+      setErro("");
+    } catch (erro) {
+      console.error("Erro ao buscar usuários:", erro);
+      setErro("Não foi possível carregar os usuários. Verifique sua conexão ou tente novamente mais tarde.");
+    }
+  };
 
-        const data = await response.json();
-        setUsers(data);
-      } catch (err) {
-        setError(err.message);
-      }
+  useEffect(() => {
+    buscarUsuarios(); 
+    socket.on("usersUpdated", buscarUsuarios);
+
+    return () => {
+      socket.off("usersUpdated", buscarUsuarios);
     };
-
-    fetchUsers();
   }, []);
 
   const toggleFiltros = () => {
