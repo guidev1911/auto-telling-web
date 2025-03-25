@@ -3,6 +3,9 @@ import "../styles/styles.css";
 import Menu from "../components/menu";
 import axios from "axios";
 import logoAt from "../images/logo-at.png";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3001");
 
 const Dashboard = () => {
   const [carros, setCarros] = useState([]); 
@@ -28,31 +31,36 @@ const Dashboard = () => {
     categoria: ""
   });
 
-  useEffect(() => {
-    const buscarCarros = async () => {
-      try {
-        const token = localStorage.getItem("token");
+  const buscarCarros = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-        if (!token) {
-          setErro("Usuário não autenticado. Faça login novamente.");
-          return;
-        }
-
-        const resposta = await axios.get("http://localhost:3001/carros", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setCarros(resposta.data); 
-        setErro("");
-      } catch (erro) {
-        console.error("Erro ao buscar os carros:", erro);
-        setErro("Não foi possível carregar os carros. Verifique sua conexão ou tente novamente mais tarde.");
+      if (!token) {
+        setErro("Usuário não autenticado. Faça login novamente.");
+        return;
       }
-    };
 
-    buscarCarros();
+      const resposta = await axios.get("http://localhost:3001/carros", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCarros(resposta.data);
+      setErro("");
+    } catch (erro) {
+      console.error("Erro ao buscar os carros:", erro);
+      setErro("Não foi possível carregar os carros. Verifique sua conexão ou tente novamente mais tarde.");
+    }
+  };
+
+  useEffect(() => {
+    buscarCarros(); 
+    socket.on("carrosUpdated", buscarCarros);
+
+    return () => {
+      socket.off("carrosUpdated", buscarCarros);
+    };
   }, []);
 
   const carrosFiltrados = carros.filter((carro) => {
