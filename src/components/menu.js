@@ -5,16 +5,29 @@ const Menu = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(location.pathname);
   const [nomeUsuario, setNomeUsuario] = useState('');
+  const [nivelUsuario, setNivelUsuario] = useState('');
 
   useEffect(() => {
     const nome = localStorage.getItem('nome');
-    if (nome) {
-      setNomeUsuario(nome);
-    }
+    const nivel = localStorage.getItem('nivel'); 
+    if (nome) setNomeUsuario(nome);
+    if (nivel) setNivelUsuario(nivel);
   }, []);
 
   const handleClick = (path) => {
-    setActiveLink(path);
+    if (isLinkEnabled(path)) {
+      setActiveLink(path);
+    }
+  };
+
+  const permissoes = {
+    vendedor: ["/dashboard", "/financiamento", "/ipva"],
+    gerente: ["/dashboard", "/financiamento", "/ipva", "/gerencia"],
+    admin: ["/dashboard", "/financiamento", "/ipva", "/gerencia", "/admin"]
+  };
+
+  const isLinkEnabled = (path) => {
+    return permissoes[nivelUsuario]?.includes(path);
   };
 
   return (
@@ -22,46 +35,28 @@ const Menu = () => {
       <div className="mb-6 text-center text-lg">
         {nomeUsuario ? `Olá, ${nomeUsuario}` : 'Olá, visitante'}
       </div>
-      
-      <Link 
-        to="/dashboard" 
-        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/dashboard' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
-        onClick={() => handleClick('/dashboard')}
-      >
-        Dashboard
-      </Link>
-      <Link 
-        to="/financiamento" 
-        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/financiamento' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
-        onClick={() => handleClick('/financiamento')}
-      >
-        Financiamento
-      </Link>
-      <Link 
-        to="/ipva" 
-        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/ipva' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
-        onClick={() => handleClick('/ipva')}
-      >
-        IPVA
-      </Link>
-      <Link 
-        to="/gerencia" 
-        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/gerencia' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
-        onClick={() => handleClick('/gerencia')}
-      >
-        Gerência
-      </Link>
-      <Link 
-        to="/admin" 
-        className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/admin' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
-        onClick={() => handleClick('/admin')}
-      >
-        Administração
-      </Link>
+
+      {["/dashboard", "/financiamento", "/ipva", "/gerencia", "/admin"].map((path) => (
+        <Link
+          key={path}
+          to={isLinkEnabled(path) ? path : "#"}
+          className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${
+            activeLink === path ? 'bg-white text-[#0B2A4C]' : isLinkEnabled(path) ? 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3' : 'opacity-50 cursor-not-allowed'
+          }`}
+          onClick={() => handleClick(path)}
+        >
+          {path === "/dashboard" ? "Dashboard" :
+           path === "/financiamento" ? "Financiamento" :
+           path === "/ipva" ? "IPVA" :
+           path === "/gerencia" ? "Gerência" :
+           "Administração"}
+        </Link>
+      ))}
+
       <div id="btSair">
         <Link 
           to="/login" 
-          className={`no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg ${activeLink === '/login' ? 'bg-white text-[#0B2A4C]' : 'text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3'}`}
+          className="no-underline my-2 -mr-5 text-base text-center p-2 w-[107%] transition-all duration-500 ease-in-out flex justify-center items-center rounded-l-lg text-white hover:bg-white hover:text-[#0B2A4C] hover:p-3"
           onClick={() => handleClick('/login')}
         >
           Sair

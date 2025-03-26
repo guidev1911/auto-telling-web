@@ -40,8 +40,10 @@ const Login = () => {
       });
 
       const usuario = userResponse.data.find(user => user.email === email);
+
       if (usuario) {
         localStorage.setItem('nome', usuario.nome);
+        localStorage.setItem('nivel', usuario.nivel); 
       }
 
       navigate('/dashboard');
