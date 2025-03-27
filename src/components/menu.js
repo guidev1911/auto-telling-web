@@ -32,8 +32,17 @@ const Menu = () => {
 
   return (
     <div className="w-[250px] bg-[#0B3674] p-4 flex flex-col items-center text-white fixed h-full">
-      <div className="mb-6 text-center text-lg">
-        {nomeUsuario ? `Olá, ${nomeUsuario}` : 'Olá, visitante'}
+        <div style={{ 
+          fontFamily: "'Dancing Script', cursive", 
+          fontSize: '1.7rem',  
+          fontWeight: '500', 
+          color: 'white', 
+          letterSpacing: '1px', 
+          textAlign: 'center', 
+          textShadow: '1px 1px 4px rgba(0, 0, 0, 0.5)', 
+          marginBottom: '20px' // Adicionado espaçamento abaixo
+        }}>
+          {nomeUsuario ? `Olá, ${nomeUsuario}` : 'Olá, visitante'}
       </div>
 
       {["/dashboard", "/financiamento", "/ipva", "/gerencia", "/admin"].map((path) => (
