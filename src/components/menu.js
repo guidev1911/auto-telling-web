@@ -40,7 +40,7 @@ const Menu = () => {
           letterSpacing: '1px', 
           textAlign: 'center', 
           textShadow: '1px 1px 4px rgba(0, 0, 0, 0.5)', 
-          marginBottom: '20px' // Adicionado espaçamento abaixo
+          marginBottom: '20px' 
         }}>
           {nomeUsuario ? `Olá, ${nomeUsuario}` : 'Olá, visitante'}
       </div>

@@ -7,6 +7,7 @@ import { AlertCircle as LucideAlertCircle } from "lucide-react";
 import AddFuncModal from "../components/addFuncModal";
 import { io } from "socket.io-client";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const socket = io("http://localhost:3001");
 
@@ -97,6 +98,7 @@ const Admin = () => {
 
       setUsers(users.filter((user) => user.id !== userToDelete.id));
       setIsDeleteModalOpen(false);
+      toast.warn("Usuário excluído com sucesso!")
     } catch (err) {
       setError(err.message);
     }
@@ -234,7 +236,7 @@ const Admin = () => {
         <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
         <LucideAlertCircle className="w-8 h-8 text-red-600 mb-2 mx-auto" />
           <h2 className="text-lg font-bold text-gray-800 font-sans">
-            Deseja excluir esse carro do estoque?
+            Deseja excluir esse usuário do sistema?
           </h2>
           <div className="mt-4 flex justify-center gap-4">
             <button
