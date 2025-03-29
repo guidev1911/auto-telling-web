@@ -27,7 +27,7 @@ const AddCarModal = ({ isOpen, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "quilometragem" || name === "preco") {
+    if (name === "quilometragem" || name === "preco" || name === "potencia") {
       setCarData({ ...carData, [name]: formatNumber(value) });
     } else {
       setCarData({ ...carData, [name]: value });
@@ -40,7 +40,7 @@ const AddCarModal = ({ isOpen, onClose }) => {
       ...carData,
       ano: carData.ano ? parseInt(carData.ano) : null,
       quilometragem: carData.quilometragem ? parseInt(carData.quilometragem.replace(/\./g, "")) : null,
-      potencia: carData.potencia ? parseInt(carData.potencia) : null,
+      potencia: carData.potencia ? parseInt(carData.potencia.replace(/\./g, "")) : null,
       zero_a_cem: carData.zero_a_cem ? parseFloat(carData.zero_a_cem) : null,
       velocidade_final: carData.velocidade_final ? parseInt(carData.velocidade_final) : null,
       preco: carData.preco ? parseFloat(carData.preco.replace(/\./g, "")) : null,
@@ -91,7 +91,7 @@ const AddCarModal = ({ isOpen, onClose }) => {
           <input name="ano" type="number" placeholder="Ano" onChange={handleChange} className="input-base" required />
           <input name="cor" placeholder="Cor" onChange={handleChange} className="input-base" required />
           <input name="quilometragem" type="text" placeholder="Quilometragem" value={carData.quilometragem} onChange={handleChange} className="input-base" required />
-          <input name="potencia" type="number" placeholder="Potência" onChange={handleChange} className="input-base" required />
+          <input name="potencia" type="text" placeholder="Potência" value={carData.potencia} onChange={handleChange} className="input-base" required />
           <input name="motor" placeholder="Motor" onChange={handleChange} className="input-base" required />
           <input name="zero_a_cem" type="number" step="0.1" placeholder="0 a 100 km/h (s)" onChange={handleChange} className="input-base" required />
           <input name="velocidade_final" type="number" placeholder="Velocidade Final" onChange={handleChange} className="input-base" required />
