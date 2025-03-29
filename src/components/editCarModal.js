@@ -174,7 +174,7 @@ const EditCarModal = ({ isOpen, setIsOpen, carData, modalClose }) => {
                 type="number"
                 step="0.01"
                 name="preco"
-                value={formData.preco || ""}
+                value={formData.preco ? parseInt(formData.preco, 10) : ""}
                 onChange={handleChange}
                 className="input-edit"
               />
