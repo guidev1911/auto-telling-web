@@ -158,7 +158,7 @@ const EditCarModal = ({ isOpen, setIsOpen, carData, modalClose }) => {
             </div>
             {/* Velocidade Final */}
             <div>
-              <label className="block mb-1">Velocidade Final:</label>
+              <label className="block mb-1">Velocidade Final - km/h :</label>
               <input
                 type="number"
                 name="velocidade_final"
